@@ -2,8 +2,8 @@
 
 function readImage(array $info):array
 {
-    $imagePath=array_shift($info);
+    $imagePath=$info[INPUT_FILE];
     $image=new Imagick($imagePath);
-    $info=['image'=>$image] + $info;
+    $info=[IMAGE=>$image] + $info;
     return $info;
 }

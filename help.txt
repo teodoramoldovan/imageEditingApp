@@ -1,0 +1,29 @@
+--input-file - REQUIRED
+               (ex: my_command_line_tool.php --input-file=img.jpg AND/OR
+                    my_command_line_tool.php --input-file=/home/username/images/img.jpg)
+
+--output-file - REQUIRED
+                (ex: my_command_line_tool.php --input-file=img.jpg --output-file=resized_img.jpg AND/OR
+                     my_command_line_tool.php --input-file=/home/username/images/img.jpg
+                                              --output-file=/home/username/resized_images/img.jpg)
+--width - OPTIONAL
+          The user should specify a number corresponding to the desired width in pixels.
+          (ex. --width=20)
+          If there is a --format argument the image will have the given width and will respect the aspect ratio from
+          the --format argument. Otherwise, the original ratio will be respected.
+
+--height - OPTIONAL
+           The user should specify a number corresponding to the desired height in pixels.
+           (ex. --height=20)
+           If there is a --format argument the image will have the given height and will respect the aspect ratio from
+           the --format argument. Otherwise, the original ratio will be respected.
+
+--format - OPTIONAL
+           The output image will have the given aspect ratio.
+           (ex. --format 4:3)
+
+--watermark - OPTIONAL
+              The output image will have the given watermark image in a (random) corner
+
+--help - OPTIONAL
+         A list with all possible arguments will be displayed explaining the usage of each one

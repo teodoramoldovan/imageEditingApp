@@ -1,0 +1,23 @@
+--input-file - this is a required argument for the tool.
+               Not providing it should fail the execution with a message.
+               The tool should look for the file provided either in a predefined image folder or support the full path
+               to the file
+               (ex: my_command_line_tool.php --input-file=img.jpg AND/OR
+                    my_command_line_tool.php --input-file=/home/username/images/img.jpg)
+--output-file - required argument.
+                Like the input file argument, the tool should be able to create the output file
+                either in the predefined folder or support the full path of the target file.
+                (ex: my_command_line_tool.php --input-file=img.jpg --output-file=resized_img.jpg AND/OR
+                     my_command_line_tool.php --input-file=/home/username/images/img.jpg --output-file=/home/username/resized_images/img.jpg)
+--width - optional parameter.
+          If used, the output image must have the given width while respecting either the original aspect ratio,
+          or the one given in the --format argument
+--height - optional parameter.
+           If used, the output image must have the given height while respecting either the original aspect ratio,
+           or the one given in the --format argument
+--format - optional parameter.
+           If used, the output image must have the given aspect ratio.
+--watermark - optional parameter.
+              If used, the output image must have the given watermark image in a (random) corner
+--help - optional parameter.
+         If used, a list with all possible arguments must be displayed explaining the usage of each one

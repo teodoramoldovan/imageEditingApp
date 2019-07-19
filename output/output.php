@@ -1,23 +1,18 @@
 <?php
-function showHelp()
+
+const HELP_FILE_NAME = "help.txt";
+
+function showHelp(): void
 {
-    $fileName="help.txt";
-    $handler=fopen($fileName,"r");
-
-    if($handler===false){
-        echo "Error in opening file";
-    }
-
-    while(!feof($handler)){
-        echo fread($handler,fileSize($fileName));
-    }
-
-    fclose($handler);
-    exit;
+    echo file_get_contents(HELP_FILE_NAME);
 }
-function showErrors(string $errors){
+
+function showErrors(string $errors): void
+{
     echo $errors;
 }
-function showSucces(string $outputPath){
-    echo "SUCCESS. The processed image can be found here: ".$outputPath.PHP_EOL;
+
+function showSuccess(string $outputPath): void
+{
+    echo "SUCCESS. The processed image can be found here: " . $outputPath . PHP_EOL;
 }

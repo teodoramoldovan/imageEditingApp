@@ -1,10 +1,15 @@
 <?php
 
-function saveProcessedImage($infoToSave)
+/**
+ * @param array $payload contains path where to save the image and the image after processing
+ * @return string file path where the image was saved
+ */
+function saveProcessedImage(array $payload): string
 {
-    $outputFilePath=$infoToSave[OUTPUT_FILE];
+    $outputFilePath = $payload[OUTPUT_FILE];
+
     /** @var Imagick $image */
-    $image=$infoToSave[IMAGE];
+    $image = $payload[IMAGE];
     $image->writeImage($outputFilePath);
 
     return $outputFilePath;

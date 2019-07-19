@@ -3,7 +3,7 @@ const VALID_PIXEL_VALUE_PATTERN = '/^\d+$/';
 const VALID_FORMAT_VALUE_PATTERN = '/\d+:\d+/';
 const VALID_EXTENSION_PATTERN = '/\.\w+/';
 const VALID_EXTENSION_TYPES = ['.jpg', '.jpeg', '.png'];
-const VALID_OPTION_TYPES =['--input-file', '--output-file', '--width', '--height', '--format', '--watermark', '--help'];
+const VALID_OPTION_TYPES = ['--input-file', '--output-file', '--width', '--height', '--format', '--watermark', '--help'];
 const IMAGE_NAME_PATTERN = "/(?<path>.*\/).*/";
 const POSSIBLE_ERRORS = [
     'required' => "Options --input-file and --output-file are required",
@@ -22,18 +22,34 @@ const POSSIBLE_ERRORS = [
 
 ];
 
-
+/**
+ * Will remove the image name from the path. Used to check if the output folder exists
+ *
+ * @param string $path
+ * @return string
+ */
 function extractDirectoryPath(string $path): string
 {
     preg_match(IMAGE_NAME_PATTERN, $path, $matches);
+
     return $matches['path'];
 }
 
+/**
+ * @param string $path
+ * @return bool
+ */
 function validatePath(string $path): bool
 {
     return file_exists($path);
 }
 
+/**
+ * Will check if the value is a number. Used for width and height values
+ *
+ * @param string $pixelValue
+ * @return bool
+ */
 function validatePixelInput(string $pixelValue): bool
 {
 
@@ -43,6 +59,10 @@ function validatePixelInput(string $pixelValue): bool
     return false;
 }
 
+/**
+ * @param string $formatValue
+ * @return bool
+ */
 function validateFormatInput(string $formatValue): bool
 {
     if (preg_match(VALID_FORMAT_VALUE_PATTERN, $formatValue) === 1) {
@@ -51,16 +71,28 @@ function validateFormatInput(string $formatValue): bool
     return false;
 }
 
+/**
+ * @param string $path
+ * @return bool
+ */
 function validateImageExtensions(string $path): bool
 {
     preg_match(VALID_EXTENSION_PATTERN, $path, $matches);
+
     $match = $matches[0];
+
     if (in_array($match, VALID_EXTENSION_TYPES)) {
         return true;
     }
     return false;
 }
 
+/**
+ * Will check if the specified input options have a valid format
+ *
+ * @param array $payload
+ * @return bool
+ */
 function validateOptions(array $payload): bool
 {
 
@@ -73,9 +105,13 @@ function validateOptions(array $payload): bool
     return true;
 }
 
+/**
+ * @param string $imagePath
+ * @return bool
+ */
 function validateMimeType(string $imagePath): bool
 {
-    if (!validatePath($imagePath) ||  !validateImageExtensions($imagePath)) {
+    if (!validatePath($imagePath) || !validateImageExtensions($imagePath)) {
         return false;
 
     }
@@ -86,6 +122,13 @@ function validateMimeType(string $imagePath): bool
     return false;
 }
 
+/**
+ * Will check if the required arguments are in the input
+ * The required options are --input-file and -output-file
+ *
+ * @param $payload
+ * @return bool
+ */
 function validateInputRequiredArguments($payload): bool
 {
     if (empty($payload[INPUT_FILE]) || empty($payload[OUTPUT_FILE])) {
@@ -94,11 +137,15 @@ function validateInputRequiredArguments($payload): bool
     return true;
 }
 
+/**
+ * @param array $payload contains parsed input
+ * @return array contains errors found
+ */
 function validateInput(array $payload): array
 {
 
     $errors = [];
-    //var_dump($payload);
+
     if (!validateOptions($payload)) {
         $errors[] = POSSIBLE_ERRORS['wrong-options'];
         return $errors;
@@ -113,6 +160,7 @@ function validateInput(array $payload): array
     if (!validatePath($payload[INPUT_FILE])) {
         $errors[] = POSSIBLE_ERRORS['input-path'];
     }
+
     if (!validatePath(extractDirectoryPath($payload[OUTPUT_FILE]))) {
 
         $errors[] = POSSIBLE_ERRORS['output-path'];
@@ -127,6 +175,7 @@ function validateInput(array $payload): array
 
         $errors[] = POSSIBLE_ERRORS['width-value'];
     }
+
     if (!empty($payload[HEIGHT]) && !validatePixelInput($payload[HEIGHT])) {
         $errors[] = POSSIBLE_ERRORS['height-value'];
     }
@@ -138,9 +187,11 @@ function validateInput(array $payload): array
     if (!validateImageExtensions($payload[INPUT_FILE])) {
         $errors[] = POSSIBLE_ERRORS['input-extension'];
     }
+
     if (!validateImageExtensions($payload[OUTPUT_FILE])) {
         $errors[] = POSSIBLE_ERRORS['output-extension'];
     }
+
     if (!empty($payload[WATERMARK]) && !validateImageExtensions($payload[WATERMARK])) {
         $errors[] = POSSIBLE_ERRORS['watermark-extension'];
     }
@@ -148,11 +199,10 @@ function validateInput(array $payload): array
     if (!validateMimeType($payload[INPUT_FILE])) {
         $errors[] = POSSIBLE_ERRORS['input-mime-type'];
     }
+
     if (!empty($payload[WATERMARK]) && !validateMimeType($payload[WATERMARK])) {
         $errors[] = POSSIBLE_ERRORS['watermark-mime-type'];
     }
-
-
 
 
     return $errors;

@@ -1,9 +1,16 @@
 <?php
 
-function readImage(array $info):array
+/**
+ * @param array $payload contains parsed input after validation
+ * @return array contains opened image instead of input file path
+ * @throws ImagickException
+ */
+function readImage(array $payload): array
 {
-    $imagePath=$info[INPUT_FILE];
-    $image=new Imagick($imagePath);
-    $info=[IMAGE=>$image] + $info;
-    return $info;
+    $imagePath = $payload[INPUT_FILE];
+    $image = new Imagick($imagePath);
+
+    $payload = [IMAGE => $image] + $payload;
+
+    return $payload;
 }

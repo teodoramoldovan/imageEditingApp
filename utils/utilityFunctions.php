@@ -1,12 +1,14 @@
 <?php
 
-function canExecuteFunction(string $functionName, array $payload )
+/**
+ * @param string $functionName
+ * @param array $payload
+ * @return bool
+ */
+function canExecuteFunction(string $functionName, array $payload): bool
 {
     return !empty($payload[$functionName]);
 }
 
-function castStringToInt(string $value):int
-{
-    return (int)$value;
-}
+
 

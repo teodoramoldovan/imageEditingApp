@@ -64,7 +64,7 @@ function saveImageInUserFolder(string $userFolderName):void
 function saveInputFieldsAsJson(array $userInsertedData,string $userFolderName):string
 {
     $jsonData=json_encode($userInsertedData);
-    $pathToInsertedData=UPLOADS_FOLDER_ROOT.$userFolderName.'/myfile.json';
+    $pathToInsertedData=UPLOADS_FOLDER_ROOT.$userFolderName.'/myfile'.time().'json';
 
     file_put_contents($pathToInsertedData, $jsonData);
 

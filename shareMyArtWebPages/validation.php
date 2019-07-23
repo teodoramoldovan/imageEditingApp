@@ -12,7 +12,7 @@ function validateEmptyFieldsInUploadPhotoForm():array
     $errors = [];
 
     if ($_POST) {
-        var_dump($_POST);
+
         if (!$_POST[IMAGE_TITLE ]) {
             $errors[IMAGE_TITLE_ERROR] = IMAGE_TITLE_EMPTY_ERROR_TEXT;
         }

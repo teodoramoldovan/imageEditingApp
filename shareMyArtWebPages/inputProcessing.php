@@ -18,8 +18,7 @@ function processUploadPhotoFormInput(array $userInsertedData): string
     if ($_POST) {
 
         $userFolderName = findUserFolder(md5($userInsertedData[ARTIST_NAME]));
-
-        saveImageInUserFolder($userFolderName);
+        saveImageInUserFolder($userInsertedData, $userFolderName);
         $pathToInsertedData = saveInputFieldsAsJson($userInsertedData, $userFolderName);
     }
 
@@ -39,6 +38,7 @@ function extractInputFieldsInArray(): array
             $userInsertedData[$key] = $value;
         }
         $userInsertedData[IMAGE_NAME] = (count($_FILES)) ? $_FILES[IMAGE][IMAGE_NAME] : '';
+        $userInsertedData[SAVED_IMAGE_NAME] = (count($_FILES)) ? time() . $_FILES[IMAGE][IMAGE_NAME] : '';
 
     }
 
@@ -48,11 +48,11 @@ function extractInputFieldsInArray(): array
 /**
  * @param string $userFolderName
  */
-function saveImageInUserFolder(string $userFolderName): void
+function saveImageInUserFolder(array $userInsertedData, string $userFolderName): void
 {
     if (count($_FILES)) {
         move_uploaded_file($_FILES[IMAGE][TEMPORARY_FILE_LOCATION],
-            UPLOADS_FOLDER_ROOT . $userFolderName . '/' . $_FILES[IMAGE][IMAGE_NAME]);
+            UPLOADS_FOLDER_ROOT . $userFolderName . '/' . $userInsertedData[SAVED_IMAGE_NAME]);
     }
 }
 

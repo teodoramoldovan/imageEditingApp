@@ -2,7 +2,7 @@
 const DISPLAY_PAGE_KEYS = [
     'Image Title', 'Image Description', 'Artist\'s email',
     'Artist\'s name', 'Camera Specification', 'Price', 'Capture Date',
-    'Tags', 'Image Name',
+    'Tags', 'Image Name', 'Saved Image Name',
 ];
 session_start();
 
@@ -17,8 +17,9 @@ $decodedPreviouslySavedData = array_combine(DISPLAY_PAGE_KEYS, $decodedPreviousl
 preg_match('/(?<folderPath>.*\/)/', $_SESSION['path'], $matches);
 
 
-$filepath = $matches['folderPath'] . $decodedPreviouslySavedData['Image Name'];
+$filepath = $matches['folderPath'] . $decodedPreviouslySavedData['Saved Image Name'];
 $filepath = str_replace("/var/www/imageUpload/shareMyArtWebPages/", "", $filepath);
+unset($decodedPreviouslySavedData['Saved Image Name']);
 
 
 ?>
@@ -65,8 +66,7 @@ $filepath = str_replace("/var/www/imageUpload/shareMyArtWebPages/", "", $filepat
 
 
                     <td style="color:white"><?php
-                        if ('tags' === $key) {
-
+                        if ('Tags' === $key) {
                             echo implode(',', $value);
                         } else {
                             echo $value;

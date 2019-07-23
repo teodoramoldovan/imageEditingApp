@@ -11,6 +11,7 @@ const PRICE = 'price';
 const CAPTURE_DATE = 'captureDate';
 const TAGS = 'tags';
 const IMAGE_NAME = 'name';
+const SAVED_IMAGE_NAME = 'savedName';
 
 const IMAGE = 'image';
 const TEMPORARY_FILE_LOCATION = 'tmp_name';

@@ -36,6 +36,9 @@ body {
     background-image: url("../uploadBackgound.jpg");
     background-repeat: no-repeat;
     background-size:cover;
+    background-attachment: fixed;
+
+
     display: block;
 }
 header {

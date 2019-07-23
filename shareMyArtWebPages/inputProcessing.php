@@ -10,17 +10,17 @@ require_once "validation.php";
  * @param array $userInsertedData
  * @return string
  */
-function processUploadPhotoFormInput(array $userInsertedData):string
+function processUploadPhotoFormInput(array $userInsertedData): string
 {
 
-    $pathToInsertedData="";
+    $pathToInsertedData = "";
 
-    if($_POST){
+    if ($_POST) {
 
-        $userFolderName=findUserFolder(md5($userInsertedData[ARTIST_NAME]));
+        $userFolderName = findUserFolder(md5($userInsertedData[ARTIST_NAME]));
 
         saveImageInUserFolder($userFolderName);
-        $pathToInsertedData=saveInputFieldsAsJson($userInsertedData,$userFolderName);
+        $pathToInsertedData = saveInputFieldsAsJson($userInsertedData, $userFolderName);
     }
 
     return $pathToInsertedData;
@@ -30,15 +30,15 @@ function processUploadPhotoFormInput(array $userInsertedData):string
 /**
  * @return array containing the data extracted from the array
  */
-function extractInputFieldsInArray():array
+function extractInputFieldsInArray(): array
 {
-    $userInsertedData=[];
-    if($_POST){
+    $userInsertedData = [];
+    if ($_POST) {
 
-        foreach ($_POST as $key=>$value){
-            $userInsertedData[$key]=$value;
+        foreach ($_POST as $key => $value) {
+            $userInsertedData[$key] = $value;
         }
-        $userInsertedData[IMAGE_NAME]=(count($_FILES))?$_FILES[IMAGE][IMAGE_NAME]:'';
+        $userInsertedData[IMAGE_NAME] = (count($_FILES)) ? $_FILES[IMAGE][IMAGE_NAME] : '';
 
     }
 
@@ -48,11 +48,11 @@ function extractInputFieldsInArray():array
 /**
  * @param string $userFolderName
  */
-function saveImageInUserFolder(string $userFolderName):void
+function saveImageInUserFolder(string $userFolderName): void
 {
     if (count($_FILES)) {
         move_uploaded_file($_FILES[IMAGE][TEMPORARY_FILE_LOCATION],
-            UPLOADS_FOLDER_ROOT.$userFolderName.'/'.$_FILES[IMAGE][IMAGE_NAME]);
+            UPLOADS_FOLDER_ROOT . $userFolderName . '/' . $_FILES[IMAGE][IMAGE_NAME]);
     }
 }
 
@@ -61,10 +61,10 @@ function saveImageInUserFolder(string $userFolderName):void
  * @param string $userFolderName
  * @return string contains the path where the file is saved
  */
-function saveInputFieldsAsJson(array $userInsertedData,string $userFolderName):string
+function saveInputFieldsAsJson(array $userInsertedData, string $userFolderName): string
 {
-    $jsonData=json_encode($userInsertedData);
-    $pathToInsertedData=UPLOADS_FOLDER_ROOT.$userFolderName.'/myfile'.time().'json';
+    $jsonData = json_encode($userInsertedData);
+    $pathToInsertedData = UPLOADS_FOLDER_ROOT . $userFolderName . '/myfile' . time() . 'json';
 
     file_put_contents($pathToInsertedData, $jsonData);
 

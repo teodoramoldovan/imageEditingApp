@@ -2,20 +2,20 @@
 /**
  * @param string $hashedFolderName
  */
-function createFolder(string $hashedFolderName):void
+function createFolder(string $hashedFolderName): void
 {
-    mkdir(UPLOADS_FOLDER_ROOT.$hashedFolderName);
+    mkdir(UPLOADS_FOLDER_ROOT . $hashedFolderName);
 }
 
 /**
  * @param string $hashedFolderName
  * @return bool
  */
-function verifyIfUserFolderAlreadyExists(string $hashedFolderName):bool
+function verifyIfUserFolderAlreadyExists(string $hashedFolderName): bool
 {
-    $uploadsFolderContent=scandir(UPLOADS_FOLDER_ROOT);
+    $uploadsFolderContent = scandir(UPLOADS_FOLDER_ROOT);
 
-    if(array_search($hashedFolderName,$uploadsFolderContent)){
+    if (array_search($hashedFolderName, $uploadsFolderContent)) {
         return true;
     }
     return false;
@@ -28,9 +28,9 @@ function verifyIfUserFolderAlreadyExists(string $hashedFolderName):bool
  * @param string $hashedFolderName
  * @return string contains hashed name of the user's folder
  */
-function findUserFolder(string $hashedFolderName):string
+function findUserFolder(string $hashedFolderName): string
 {
-    if(!verifyIfUserFolderAlreadyExists($hashedFolderName)){
+    if (!verifyIfUserFolderAlreadyExists($hashedFolderName)) {
         createFolder($hashedFolderName);
     }
     return $hashedFolderName;

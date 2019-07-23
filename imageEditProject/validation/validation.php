@@ -53,10 +53,8 @@ function validatePath(string $path): bool
 function validatePixelInput(string $pixelValue): bool
 {
 
-    if (preg_match(VALID_PIXEL_VALUE_PATTERN, $pixelValue) === 1) {
-        return true;
-    }
-    return false;
+    return preg_match(VALID_PIXEL_VALUE_PATTERN, $pixelValue) === 1;
+
 }
 
 /**
@@ -65,10 +63,8 @@ function validatePixelInput(string $pixelValue): bool
  */
 function validateFormatInput(string $formatValue): bool
 {
-    if (preg_match(VALID_FORMAT_VALUE_PATTERN, $formatValue) === 1) {
-        return true;
-    }
-    return false;
+   return preg_match(VALID_FORMAT_VALUE_PATTERN, $formatValue) === 1;
+
 }
 
 /**
@@ -97,7 +93,7 @@ function validateOptions(array $payload): bool
 {
 
     foreach ($payload as $key => $value) {
-        //var_dump($key);
+
         if (!in_array($key, VALID_OPTION_TYPES))
 
             return false;

@@ -8,22 +8,22 @@ session_start();
 
 $errors=validateEmptyFieldsInUploadPhotoForm();
 
+$userInsertedData=extractInputFieldsInArray();
+
+$errors2 = !empty($userInsertedData)
+    ? validateCorrectInputInUploadPhotoForm($userInsertedData)
+    : [];
+$errors=array_merge($errors2,$errors);
 if(empty($errors)){
 
-    $userInsertedData=extractInputFieldsInArray();
+    $pathToInsertedData=processUploadPhotoFormInput($userInsertedData);
 
-    $errors=(!empty($userInsertedData))?validateCorrectInputInUploadPhotoForm($userInsertedData):[];
-
-    if(empty($errors)){
-
-        $pathToInsertedData=processUploadPhotoFormInput($userInsertedData);
-
-        if(!empty($pathToInsertedData)){
-            $_SESSION['path']=$pathToInsertedData;
-            header("Location:successPage.php");
-        }
+    if(!empty($pathToInsertedData)){
+        $_SESSION['path']=$pathToInsertedData;
+        header("Location:successPage.php");
     }
 }
+
 
 ?>
 

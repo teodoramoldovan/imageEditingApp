@@ -31,10 +31,12 @@
     background-color: rgb(62, 89, 116);
     color: rgb(194, 240, 240);
 }
+
 body {
     background-image: url("../uploadBackgound.jpg");
     background-repeat: no-repeat;
     background-size:cover;
+    display: block;
 }
 header {
     background-color: rgba(0,0,0,0.7);

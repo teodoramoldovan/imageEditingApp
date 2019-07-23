@@ -12,7 +12,7 @@ function validateEmptyFieldsInUploadPhotoForm():array
     $errors = [];
 
     if ($_POST) {
-
+        var_dump($_POST);
         if (!$_POST[IMAGE_TITLE ]) {
             $errors[IMAGE_TITLE_ERROR] = IMAGE_TITLE_EMPTY_ERROR_TEXT;
         }
@@ -89,7 +89,7 @@ function isPriceValid(string $price):bool
  * @param array $tags
  * @return bool
  */
-function areTagsValid(array $tags):bool
+function areTagsValid(?array $tags):bool
 {
     foreach ($tags as $tagItem){
         if(!in_array($tagItem,VALID_TAGS)){
@@ -111,16 +111,16 @@ function validateCorrectInputInUploadPhotoForm(array $userInsertedData):array
 {
     $errors=[];
 
-    if(!isEmailValid($userInsertedData[ARTIST_EMAIL])){
+    if(array_key_exists(ARTIST_EMAIL, $userInsertedData) && !isEmailValid($userInsertedData[ARTIST_EMAIL])){
         $errors[ARTIST_EMAIL_ERROR]=ARTIST_EMAIL_ERROR_TEXT;
     }
-    if(!isPriceValid($userInsertedData[PRICE])){
+    if(array_key_exists(PRICE, $userInsertedData) && !isPriceValid($userInsertedData[PRICE])){
         $errors[PRICE_ERROR]=PRICE_ERROR_TEXT;
     }
-    if(!isDateValid($userInsertedData[CAPTURE_DATE])){
+    if(array_key_exists(CAPTURE_DATE, $userInsertedData) && !isDateValid($userInsertedData[CAPTURE_DATE])){
         $errors[CAPTURE_DATE_ERROR]=CAPTURE_DATE_ERROR_TEXT;
     }
-    if(!areTagsValid($userInsertedData[TAGS])){
+    if(array_key_exists(TAGS, $userInsertedData) && !areTagsValid($userInsertedData[TAGS])){
         $errors[TAGS_ERROR]=TAGS_ERROR_TEXT;
     }
 

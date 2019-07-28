@@ -1,11 +1,15 @@
 <?php
 
 namespace ShareMyArt\Controller;
+
+use ShareMyArt\View\Renderer\HomepageRenderer;
+
 class ProductController
 {
     public function showProducts()
     {
-        require "src/View/Template/homepage.php";
+        $homepageRenderer = new HomepageRenderer();
+        $homepageRenderer->render();
     }
 
 }

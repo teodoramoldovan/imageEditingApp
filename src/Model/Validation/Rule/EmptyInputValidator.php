@@ -6,11 +6,13 @@ namespace ShareMyArt\Model\Validation\Rule;
 
 class EmptyInputValidator extends RuleCommand
 {
-    public function validate(array $userInsertedData):string
+    public function validate(array $userInsertedData):array
     {
-        if(empty($userInsertedData['email']) || empty($userInsertedData['password'])){
-            return 'Input fields cannot be empty';
+        foreach ($userInsertedData as $inputValue){
+            if(empty($inputValue)){
+                return ['emptyFieldsError'=>'Input fields cannot be empty'];
+            }
         }
-        return '';
+        return [];
     }
 }

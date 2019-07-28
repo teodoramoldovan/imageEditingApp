@@ -21,9 +21,14 @@
     <label for="inputEmail" class="sr-only">Email address</label>
     <input type="email" value="<?php echo isset($_POST['email']) ? $_POST['email'] : '' ?>" name="email" id="inputEmail" class="form-control"
            placeholder="Email address" required autofocus>
-    <?php if (isset($_POST) && $this->errors && array_key_exists(1,$this->errors)) { ?>
-        <div style="color: rgb(204, 0, 0)"><?php echo $this->errors[1] ?></div>
+    <?php if (isset($_POST) && $this->errors && array_key_exists('invalidEmailFormatError',$this->errors)) { ?>
+        <div style="color: rgb(204, 0, 0)"><?php echo $this->errors['invalidEmailFormatError'] ?></div>
     <?php } ?>
+
+    <?php if (isset($_POST) && $this->errors && array_key_exists('userNotFoundError',$this->errors)) { ?>
+        <div style="color: rgb(204, 0, 0)"><?php echo $this->errors['userNotFoundError'] ?></div>
+    <?php } ?>
+
 
     <label for="inputPassword" class="sr-only">Password</label>
     <input type="password" name="password" id="inputPassword" class="form-control"
@@ -32,18 +37,21 @@
         <div style="color: rgb(204, 0, 0)"><?php echo $this->errors['invalidPasswordError'] ?></div>
     <?php } ?>
 
-    <?php if (isset($_POST) && $this->errors && array_key_exists(0,$this->errors)) { ?>
-        <div style="color: rgb(204, 0, 0)"><?php echo $this->errors[0] ?></div>
+
+    <?php if (isset($_POST) && $this->errors && array_key_exists('emptyFieldsError',$this->errors)) { ?>
+        <div style="color: rgb(204, 0, 0)"><?php echo $this->errors['emptyFieldsError'] ?></div>
     <?php } ?>
 
-    <?php if (isset($_POST) && $this->errors && array_key_exists('userNotFoundError',$this->errors)) { ?>
-        <div style="color: rgb(204, 0, 0)"><?php echo $this->errors['userNotFoundError'] ?></div>
-    <?php } ?>
+
+
+    <a href="/user/register" style="color:deepskyblue">Haven't got an account? Register now</a>
 
     <button class="btn btn-lg btn-primary btn-block" type="submit" formnovalidate>
         Sign in
     </button>
 </form>
+
+
 
 
 </body>

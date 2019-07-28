@@ -7,8 +7,10 @@ namespace ShareMyArt\Controller;
 use ShareMyArt\Model\Persistence\UserFinder;
 use ShareMyArt\Model\Validation\FormInputValidator\UserValidator;
 use ShareMyArt\Model\Validation\FormValidator\LoginFormValidator;
+use ShareMyArt\Model\Validation\FormValidator\RegisterFormValidator;
 use ShareMyArt\View\Renderer\LoginPageRenderer;
 use ShareMyArt\View\Renderer\ProfilePageRenderer;
+use ShareMyArt\View\Renderer\RegisterPageRenderer;
 
 class UserController
 {
@@ -35,10 +37,10 @@ class UserController
         $user = $userFinder->findUserByEmail($_POST['email']);
 
         $userValidator = new UserValidator();
-        $userValidationErrors = $userValidator->validateUser($user);
+        $userValidationErrors = $userValidator->validateUserAtLogin($user);
 
         $errors = array_merge($userValidationErrors, $errors);
-
+        var_dump($errors);
         if (empty($errors)) {
             $_SESSION['userId'] = $user->getId();
             header('Location:/user/profile');
@@ -63,6 +65,38 @@ class UserController
         unset($_SESSION['userId']);
 
         header('Location:/');
+    }
+
+    public function register()
+    {
+        $errors=[];
+        $registerPageRenderer = new RegisterPageRenderer($errors);
+        $registerPageRenderer->render();
+    }
+
+    public function registerPost()
+    {
+
+        $registerFormValidator = new RegisterFormValidator();
+        $errors = $registerFormValidator->validateInput($_POST);
+
+        $userFinder = new UserFinder();
+        $user = $userFinder->findUserByEmail($_POST['email']);
+
+        $userValidator = new UserValidator();
+        $userValidationErrors = $userValidator->validateUserAtRegistration($user);
+
+        $errors = array_merge($userValidationErrors, $errors);
+
+        if (empty($errors)) {
+            $newUser=$userFinder->addUser(['name'=>$_POST['name'],'email'=>$_POST['email'],'password'=>$_POST['password']]);
+            $_SESSION['userId'] = $newUser->getId();
+            header('Location:/user/profile');
+        }
+
+        $registerPageRenderer = new RegisterPageRenderer($errors);
+        $registerPageRenderer->render();
+
     }
 
 }

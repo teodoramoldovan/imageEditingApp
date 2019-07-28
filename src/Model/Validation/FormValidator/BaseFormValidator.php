@@ -31,7 +31,7 @@ class BaseFormValidator
     {
         $errors=[];
         foreach ($this->validationRules as $rule){
-            $errors[]=$rule->validate($userInsertedData);
+            $errors=array_merge($errors,$rule->validate($userInsertedData));
         }
         return $errors;
     }

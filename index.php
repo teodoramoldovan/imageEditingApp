@@ -7,6 +7,8 @@ const URL_MAP = [
     '/user/loginPost' => "ShareMyArt\Controller\UserController::loginPost",
     '/user/profile' => "ShareMyArt\Controller\UserController::showProfile",
     '/user/logout' => "ShareMyArt\Controller\UserController::logout",
+    '/user/register' => "ShareMyArt\Controller\UserController::register",
+    '/user/registerPost' => "ShareMyArt\Controller\UserController::registerPost",
 
 ];
 

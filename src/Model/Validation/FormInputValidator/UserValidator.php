@@ -8,7 +8,7 @@ use ShareMyArt\Model\DomainObject\User;
 
 class UserValidator
 {
-    public function validateUser(?User $user):array
+    public function validateUserAtLogin(?User $user):array
     {
         $errors=[];
         if(empty($user)){
@@ -20,6 +20,16 @@ class UserValidator
         }
         return $errors;
 
+    }
+
+    public function validateUserAtRegistration(?User $user):array
+    {
+        $errors=[];
+        if(!empty($user)){
+            $errors['userAlreadyExistsError']='An user with this email already exists';
+
+        }
+        return $errors;
     }
 
 }

@@ -28,10 +28,6 @@ class UserController
      */
     public function loginPost()
     {
-        if (!isset($_SESSION)) {
-            session_start();
-        }
-
         $loginFormValidator = new LoginFormValidator();
         $errors = $loginFormValidator->validateInput($_POST);
 
@@ -58,12 +54,15 @@ class UserController
      */
     public function showProfile()
     {
-        if (!isset($_SESSION)) {
-            session_start();
-        }
-
         $profilePageRenderer = new ProfilePageRenderer();
         $profilePageRenderer->render();
+    }
+
+    public function logout()
+    {
+        unset($_SESSION['userId']);
+
+        header('Location:/');
     }
 
 }

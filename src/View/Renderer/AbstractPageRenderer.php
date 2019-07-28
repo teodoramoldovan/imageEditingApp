@@ -28,10 +28,6 @@ abstract class AbstractPageRenderer
      */
     public function wrapHeader(AbstractHeader $header): AbstractHeader
     {
-        if (!isset($_SESSION)) {
-            session_start();
-        }
-
         $header = (isset($_SESSION) && array_key_exists('userId', $_SESSION))
             ? new LoggedInUserHeader($header)
             : new GuestUserHeader($header);

@@ -1,3 +1,4 @@
 .idea/*
 shareMyArtWebPages/uploads/*
 vendor/
+.htaccess

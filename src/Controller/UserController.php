@@ -9,8 +9,9 @@ use ShareMyArt\Model\Validation\FormInputValidator\UserValidator;
 use ShareMyArt\Model\Validation\FormValidator\LoginFormValidator;
 use ShareMyArt\Model\Validation\FormValidator\RegisterFormValidator;
 use ShareMyArt\View\Renderer\LoginPageRenderer;
-use ShareMyArt\View\Renderer\ProfilePageRenderer;
+use ShareMyArt\View\Renderer\OrdersPageRenderer;
 use ShareMyArt\View\Renderer\RegisterPageRenderer;
+use ShareMyArt\View\Renderer\UploadsPageRenderer;
 
 class UserController extends AbstractController
 {
@@ -43,7 +44,7 @@ class UserController extends AbstractController
         if (empty($errors)) {
             $this->request->setSessionData('userId', $user->getId());
 
-            header('Location:/user/profile');
+            header('Location:/');
         }
 
         $loginPageRenderer = new LoginPageRenderer($this->request, $errors);
@@ -51,14 +52,6 @@ class UserController extends AbstractController
 
     }
 
-    /**
-     * Will display the profile of the currently logged in user
-     */
-    public function showProfile()
-    {
-        $profilePageRenderer = new ProfilePageRenderer($this->request);
-        $profilePageRenderer->render();
-    }
 
     public function logout()
     {
@@ -92,11 +85,27 @@ class UserController extends AbstractController
             $newUser = $userFinder->addUser(['name' => $_POST['name'], 'email' => $_POST['email'], 'password' => $_POST['password']]);
             $this->request->setSessionData('userId', $newUser->getId());
 
-            header('Location:/user/profile');
+            header('Location:/');
         }
 
         $registerPageRenderer = new RegisterPageRenderer($this->request,$errors);
         $registerPageRenderer->render();
+
+    }
+
+    public function showUploads()
+    {
+        //TODO
+
+        $uploadsPageRenderer=new UploadsPageRenderer($this->request);
+        $uploadsPageRenderer->render();
+    }
+
+    public function showOrders()
+    {
+        //TODO
+        $ordersPageRenderer=new OrdersPageRenderer($this->request);
+        $ordersPageRenderer->render();
 
     }
 }

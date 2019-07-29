@@ -23,7 +23,55 @@ class OrderItem
         $this->createdAt = $createdAt;
     }
 
-    //TODO getters and setters when needed
+    /**
+     * @return int
+     */
+    public function getUserId(): int
+    {
+        return $this->userId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTierId(): int
+    {
+        return $this->tierId;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param int $userId
+     */
+    public function setUserId(int $userId): void
+    {
+        $this->userId = $userId;
+    }
+
+    /**
+     * @param int $tierId
+     */
+    public function setTierId(int $tierId): void
+    {
+        $this->tierId = $tierId;
+    }
+
+    /**
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt(\DateTime $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+
 
 
 }

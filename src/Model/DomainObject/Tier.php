@@ -36,7 +36,103 @@ class Tier
         $this->imagePathWithoutWatermark = $imagePathWithoutWatermark;
     }
 
-    //TODO getters and setters when needed
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getProductId(): int
+    {
+        return $this->productId;
+    }
+
+    /**
+     * @param int $productId
+     */
+    public function setProductId(int $productId): void
+    {
+        $this->productId = $productId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSize(): string
+    {
+        return $this->size;
+    }
+
+    /**
+     * @param string $size
+     */
+    public function setSize(string $size): void
+    {
+        $this->size = $size;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPrice(): float
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param float $price
+     */
+    public function setPrice(float $price): void
+    {
+        $this->price = $price;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImagePathWithWatermark(): string
+    {
+        return $this->imagePathWithWatermark;
+    }
+
+    /**
+     * @param string $imagePathWithWatermark
+     */
+    public function setImagePathWithWatermark(string $imagePathWithWatermark): void
+    {
+        $this->imagePathWithWatermark = $imagePathWithWatermark;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImagePathWithoutWatermark(): string
+    {
+        return $this->imagePathWithoutWatermark;
+    }
+
+    /**
+     * @param string $imagePathWithoutWatermark
+     */
+    public function setImagePathWithoutWatermark(string $imagePathWithoutWatermark): void
+    {
+        $this->imagePathWithoutWatermark = $imagePathWithoutWatermark;
+    }
+
+
 
     public function getOrders()
     {

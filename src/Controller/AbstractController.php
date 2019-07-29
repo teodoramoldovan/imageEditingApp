@@ -5,7 +5,6 @@ namespace ShareMyArt\Controller;
 
 
 use ShareMyArt\Request\Request;
-use ShareMyArt\View\Renderer\AbstractPageRenderer;
 
 abstract class AbstractController
 {

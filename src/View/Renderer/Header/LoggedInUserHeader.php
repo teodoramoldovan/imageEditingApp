@@ -4,17 +4,12 @@
 namespace ShareMyArt\View\Renderer\Header;
 
 
+use ShareMyArt\Helper\HeaderOptionsConstants;
 use ShareMyArt\View\Renderer\LoginPageRenderer;
 
 class LoggedInUserHeader extends HeaderDecorator
 {
-    /**
-     * options available when the user is logged in
-     */
-    const loggedInListOptions = ['/user/myUploads' => 'My Uploads',
-                                '/user/myOrders' => 'My Orders',
-                                '/product/upload' => 'Upload a photo',
-                                '/user/logout' => 'Logout'];
+
 
     public function __construct(AbstractHeader $headerList)
     {
@@ -23,8 +18,9 @@ class LoggedInUserHeader extends HeaderDecorator
 
     public function getHeaderList(): array
     {
+        $loggedInDropdownOptions=HeaderOptionsConstants::getLoggedInOptions();
         return array_merge(
-            self::loggedInListOptions,
+            $loggedInDropdownOptions,
             $this->headerList->getHeaderList()
         );
     }

@@ -4,12 +4,11 @@
 namespace ShareMyArt\View\Renderer\Header;
 
 
+use ShareMyArt\Helper\HeaderOptionsConstants;
+
 class GuestUserHeader extends HeaderDecorator
 {
-    /**
-     * options available when the user is browsing the website anonymously
-     */
-    const anonymousListOptions = ['/user/login' => 'Login'];
+
 
     public function __construct(AbstractHeader $headerList)
     {
@@ -18,8 +17,9 @@ class GuestUserHeader extends HeaderDecorator
 
     public function getHeaderList(): array
     {
+        $anonymousDropdownOptions=HeaderOptionsConstants::getAnonymousOptions();
         return array_merge(
-            self::anonymousListOptions,
+            $anonymousDropdownOptions,
             $this->headerList->getHeaderList()
         );
     }

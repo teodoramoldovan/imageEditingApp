@@ -4,13 +4,24 @@
 namespace ShareMyArt\Controller;
 
 
+use ShareMyArt\Request\Request;
+
 class FrontController
 {
+    /**
+     * @var array
+     */
     private $routesConfiguration;
+
+    /**
+     * @var Request
+     */
+    private $request;
 
     public function __construct(array $routesConfiguration)
     {
         $this->routesConfiguration = $routesConfiguration;
+        $this->request = new Request();
     }
 
     /**
@@ -24,7 +35,7 @@ class FrontController
         $className = $this->routesConfiguration[$uri]['className'];
         $methodName = $this->routesConfiguration[$uri]['methodName'];
 
-        $controller = new $className();
+        $controller = new $className($this->request);
         $controller->$methodName();
     }
 

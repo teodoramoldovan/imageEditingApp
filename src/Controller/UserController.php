@@ -8,22 +8,12 @@ use ShareMyArt\Model\Persistence\UserFinder;
 use ShareMyArt\Model\Validation\FormInputValidator\UserValidator;
 use ShareMyArt\Model\Validation\FormValidator\LoginFormValidator;
 use ShareMyArt\Model\Validation\FormValidator\RegisterFormValidator;
-use ShareMyArt\SuperGlobalsWrapper\PostSuperGlobalWrapper;
-use ShareMyArt\SuperGlobalsWrapper\SessionSuperGlobalWrapper;
 use ShareMyArt\View\Renderer\LoginPageRenderer;
 use ShareMyArt\View\Renderer\ProfilePageRenderer;
 use ShareMyArt\View\Renderer\RegisterPageRenderer;
 
-class UserController
+class UserController extends AbstractController
 {
-    private $postDataWrapper;
-    private $sessionDataWrapper;
-
-    public function __construct()
-    {
-        $this->postDataWrapper = new PostSuperGlobalWrapper();
-        $this->sessionDataWrapper = new SessionSuperGlobalWrapper();
-    }
 
     /**
      * Will display the login page
@@ -31,7 +21,7 @@ class UserController
     public function login()
     {
         $errors = [];
-        $loginPageRenderer = new LoginPageRenderer($errors);
+        $loginPageRenderer = new LoginPageRenderer($this->request,$errors);
         $loginPageRenderer->render();
     }
 
@@ -41,22 +31,22 @@ class UserController
     public function loginPost()
     {
         $loginFormValidator = new LoginFormValidator();
-        $errors = $loginFormValidator->validateInput($this->postDataWrapper->getPostSuperGlobalData());
+        $errors = $loginFormValidator->validateInput($this->request->getPostData(null));
 
         $userFinder = new UserFinder();
-        $user = $userFinder->findUserByEmail($this->postDataWrapper->getPostSuperGlobalData()['email']);
+        $user = $userFinder->findUserByEmail($this->request->getPostData('email'));
 
-        $userValidator = new UserValidator();
+        $userValidator = new UserValidator($this->request);
         $userValidationErrors = $userValidator->validateUserAtLogin($user);
 
         $errors = array_merge($userValidationErrors, $errors);
         if (empty($errors)) {
-            $this->sessionDataWrapper->setSessionSuperGlobal('userId', $user->getId());
+            $this->request->setSessionData('userId', $user->getId());
 
             header('Location:/user/profile');
         }
 
-        $loginPageRenderer = new LoginPageRenderer($errors);
+        $loginPageRenderer = new LoginPageRenderer($this->request, $errors);
         $loginPageRenderer->render();
 
     }
@@ -66,13 +56,13 @@ class UserController
      */
     public function showProfile()
     {
-        $profilePageRenderer = new ProfilePageRenderer();
+        $profilePageRenderer = new ProfilePageRenderer($this->request);
         $profilePageRenderer->render();
     }
 
     public function logout()
     {
-        $this->sessionDataWrapper->unsetSessionValue('userId');
+        $this->request->unsetSessionData('userId');
 
         header('Location:/');
     }
@@ -80,7 +70,7 @@ class UserController
     public function register()
     {
         $errors = [];
-        $registerPageRenderer = new RegisterPageRenderer($errors);
+        $registerPageRenderer = new RegisterPageRenderer($this->request,$errors);
         $registerPageRenderer->render();
     }
 
@@ -88,26 +78,25 @@ class UserController
     {
 
         $registerFormValidator = new RegisterFormValidator();
-        $errors = $registerFormValidator->validateInput($this->postDataWrapper->getPostSuperGlobalData());
+        $errors = $registerFormValidator->validateInput($this->request->getPostData(null));
 
         $userFinder = new UserFinder();
-        $user = $userFinder->findUserByEmail($this->postDataWrapper->getPostSuperGlobalData()['email']);
+        $user = $userFinder->findUserByEmail($this->request->getPostData('email'));
 
-        $userValidator = new UserValidator();
+        $userValidator = new UserValidator($this->request);
         $userValidationErrors = $userValidator->validateUserAtRegistration($user);
 
         $errors = array_merge($userValidationErrors, $errors);
 
         if (empty($errors)) {
             $newUser = $userFinder->addUser(['name' => $_POST['name'], 'email' => $_POST['email'], 'password' => $_POST['password']]);
-            $this->sessionDataWrapper->setSessionSuperGlobal('userId', $newUser->getId());
+            $this->request->setSessionData('userId', $newUser->getId());
 
             header('Location:/user/profile');
         }
 
-        $registerPageRenderer = new RegisterPageRenderer($errors);
+        $registerPageRenderer = new RegisterPageRenderer($this->request,$errors);
         $registerPageRenderer->render();
 
     }
-
 }

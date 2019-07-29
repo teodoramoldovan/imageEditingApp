@@ -4,13 +4,15 @@
 namespace ShareMyArt\View\Renderer;
 
 
+use ShareMyArt\Request\Request;
+
 class LoginPageRenderer extends AbstractPageRenderer
 {
     private $errors;
 
-    public function __construct($errors)
+    public function __construct(Request $request, $errors)
     {
-        parent::__construct();
+        parent::__construct($request);
         $this->errors = $errors;
     }
 

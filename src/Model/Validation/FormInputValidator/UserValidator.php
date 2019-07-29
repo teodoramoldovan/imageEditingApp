@@ -5,16 +5,15 @@ namespace ShareMyArt\Model\Validation\FormInputValidator;
 
 
 use ShareMyArt\Model\DomainObject\User;
-use ShareMyArt\SuperGlobalsWrapper\PostSuperGlobalWrapper;
-
+use ShareMyArt\Request\Request;
 
 class UserValidator
 {
-    private $postDataWrapper;
+    private $request;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
-        $this->postDataWrapper = new PostSuperGlobalWrapper();
+        $this->request=$request;
     }
 
     public function validateUserAtLogin(?User $user): array
@@ -24,7 +23,7 @@ class UserValidator
             $errors['userNotFoundError'] = 'User not found in the database';
             return $errors;
         }
-        if ($user->getPassword() != $this->postDataWrapper->getPostSuperGlobalData()['password']) {
+        if ($user->getPassword() != $this->request->getPostData('password')) {
             $errors['invalidPasswordError'] = 'Invalid password';
         }
         return $errors;

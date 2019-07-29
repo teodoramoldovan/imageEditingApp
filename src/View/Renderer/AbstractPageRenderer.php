@@ -3,8 +3,7 @@
 
 namespace ShareMyArt\View\Renderer;
 
-
-use ShareMyArt\SuperGlobalsWrapper\SessionSuperGlobalWrapper;
+use ShareMyArt\Request\Request;
 use ShareMyArt\View\Renderer\Header\AbstractHeader;
 use ShareMyArt\View\Renderer\Header\ConcreteHeader;
 use ShareMyArt\View\Renderer\Header\GuestUserHeader;
@@ -13,16 +12,14 @@ use ShareMyArt\View\Renderer\Header\LoggedInUserHeader;
 abstract class AbstractPageRenderer
 {
     private $header;
-    private $sessionDataWrapper;
+    private $request;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
         $this->header = new ConcreteHeader();
-        $this->sessionDataWrapper = new SessionSuperGlobalWrapper();
+        $this->request = $request;
 
         $this->header = $this->wrapHeader($this->header);
-
-
     }
 
     /**
@@ -34,7 +31,7 @@ abstract class AbstractPageRenderer
      */
     public function wrapHeader(AbstractHeader $header): AbstractHeader
     {
-        $sessionData = $this->sessionDataWrapper->getSessionSuperGlobalData();
+        $sessionData = $this->request->getSessionData(null);
         $header = (isset($sessionData) && array_key_exists('userId', $sessionData))
             ? new LoggedInUserHeader($header)
             : new GuestUserHeader($header);

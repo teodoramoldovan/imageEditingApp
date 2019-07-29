@@ -3,7 +3,11 @@ require 'vendor/autoload.php';
 
 use ShareMyArt\Controller\FrontController;
 
-$routesConfiguration = include 'routesConfig.php';
+$anonymousRoutesConfiguration = include 'anonymousRoutesConfig.php';
+$loggedInRoutesConfiguration = include 'loggedInRoutesConfig.php';
 
-$frontController = new FrontController($routesConfiguration);
+$frontController = new FrontController(
+                                    $anonymousRoutesConfiguration,
+                                    $loggedInRoutesConfiguration
+                    );
 $frontController->dispatch($_SERVER['REQUEST_URI']);

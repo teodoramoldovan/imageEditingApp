@@ -14,11 +14,10 @@ class User
 
     /**
      * User constructor.
-     *
-     * @param int $id
      * @param string $name
      * @param string $email
      * @param string $password
+     * @param int|null $id
      */
     public function __construct(string $name, string $email, string $password, int $id = null)
     {
@@ -37,11 +36,27 @@ class User
     }
 
     /**
-     * @return int
+     * @param string $password
      */
-    public function getId(): int
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 
     /**
@@ -76,26 +91,9 @@ class User
         $this->email = $email;
     }
 
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @param string $password
-     */
-    public function setPassword(string $password): void
-    {
-        $this->password = $password;
-    }
-
-
-
 
     //TODO
+
     public function getOrders()
     {
 

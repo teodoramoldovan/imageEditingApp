@@ -3,8 +3,8 @@ require 'vendor/autoload.php';
 
 use ShareMyArt\Controller\FrontController;
 
-$anonymousRoutesConfiguration = include 'anonymousRoutesConfig.php';
-$loggedInRoutesConfiguration = include 'loggedInRoutesConfig.php';
+$anonymousRoutesConfiguration = include 'configurations/anonymousRoutesConfig.php';
+$loggedInRoutesConfiguration = include 'configurations/loggedInRoutesConfig.php';
 
 $frontController = new FrontController(
                                     $anonymousRoutesConfiguration,

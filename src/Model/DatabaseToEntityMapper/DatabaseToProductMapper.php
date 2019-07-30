@@ -25,7 +25,7 @@ class DatabaseToProductMapper
             $row['user_id'],
             $row['title'],
             $row['description'],
-            [],
+            $row['tags'],
             $row['camera_specifications'],
             $captureDate,
             $row['thumbnail_path'],

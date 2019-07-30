@@ -27,7 +27,7 @@ class Product
      * @param int $userId
      * @param string $title
      * @param string $description
-     * @param array $tags
+     * @param array|Tag[] $tags
      * @param string $cameraSpecifications
      * @param \DateTime $captureDate
      * @param string $thumbnailPath

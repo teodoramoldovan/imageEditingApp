@@ -32,7 +32,7 @@ class Product
      * @param \DateTime $captureDate
      * @param string $thumbnailPath
      */
-    /*public function __construct(int $userId, string $title, string $description, array $tags,
+    public function __construct(int $userId, string $title, string $description, array $tags,
                                 string $cameraSpecifications, \DateTime $captureDate,
                                 string $thumbnailPath, int $id = null)
     {
@@ -44,7 +44,7 @@ class Product
         $this->cameraSpecifications = $cameraSpecifications;
         $this->captureDate = $captureDate;
         $this->thumbnailPath = $thumbnailPath;
-    }*/
+    }
 
     /**
      * @return int

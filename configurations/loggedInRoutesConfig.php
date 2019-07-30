@@ -3,27 +3,33 @@ return [
 
     '/user/logout' =>[
         'className'=>'\ShareMyArt\Controller\UserController',
-        'methodName'=>'logout'
+        'methodName'=>'logout',
+        'arguments' => false
     ] ,
     '/product/upload'=>[
         'className'=>'\ShareMyArt\Controller\ProductController',
-        'methodName'=>'uploadProduct'
+        'methodName'=>'uploadProduct',
+        'arguments' => false
     ],
     '/product/uploadPost'=>[
         'className'=>'\ShareMyArt\Controller\ProductController',
-        'methodName'=>'uploadProductPost'
+        'methodName'=>'uploadProductPost',
+        'arguments' => false
     ],
     '/product/buy'=>[
         'className'=>'\ShareMyArt\Controller\ProductController',
-        'methodName'=>'buyProduct'
+        'methodName'=>'buyProduct',
+        'arguments' => false//for now
     ],
     '/user/myUploads' =>[
         'className'=>'\ShareMyArt\Controller\UserController',
-        'methodName'=>'showUploads'
+        'methodName'=>'showUploads',
+        'arguments' => false
     ] ,
     '/user/myOrders' =>[
         'className'=>'\ShareMyArt\Controller\UserController',
-        'methodName'=>'showOrders'
+        'methodName'=>'showOrders',
+        'arguments' => false
     ] ,
 
 ];

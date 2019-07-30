@@ -14,7 +14,7 @@
     <ul>
             <?php foreach ($this->products as $product){?>
                 <li>
-                <a href="/product/show" style="color:white"> Product name: <?= $product->getTitle()?></a>
+                <a href="/product/show/<?php echo $product->getId();?>" style="color:white"> Product name: <?= $product->getTitle()?></a>
                 </li>
             <?php } ?>
     </ul>

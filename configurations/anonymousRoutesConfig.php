@@ -2,27 +2,33 @@
 return [
     '/' => [
         'className'=>'\ShareMyArt\Controller\ProductController',
-        'methodName'=>'showProducts'
+        'methodName'=>'showProducts',
+        'arguments' => false
     ],
     '/user/login' => [
         'className'=>'\ShareMyArt\Controller\UserController',
-        'methodName'=>'login'
+        'methodName'=>'login',
+        'arguments' => false
     ],
     '/user/loginPost' =>[
         'className'=>'\ShareMyArt\Controller\UserController',
-        'methodName'=>'loginPost'
+        'methodName'=>'loginPost',
+        'arguments' => false
     ] ,
     '/user/register' =>[
         'className'=>'\ShareMyArt\Controller\UserController',
-        'methodName'=>'register'
+        'methodName'=>'register',
+        'arguments' => false
     ] ,
     '/user/registerPost' =>[
         'className'=>'\ShareMyArt\Controller\UserController',
-        'methodName'=>'registerPost'
+        'methodName'=>'registerPost',
+        'arguments' => false
     ] ,
     '/product/show'=>[
         'className'=>'\ShareMyArt\Controller\ProductController',
-        'methodName'=>'showProduct'
+        'methodName'=>'showProduct',
+        'arguments' => true
     ],
 
 ];

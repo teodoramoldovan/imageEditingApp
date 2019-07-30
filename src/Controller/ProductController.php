@@ -43,9 +43,9 @@ class ProductController extends AbstractController
         //TODO
     }
 
-    public function showProduct()
+    public function showProduct(int $id)
     {
-        $productPageRenderer = new ProductPageRenderer($this->request);
+        $productPageRenderer = new ProductPageRenderer($this->request,$id);
         $productPageRenderer->render();
     }
 

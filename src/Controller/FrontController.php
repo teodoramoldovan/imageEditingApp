@@ -8,16 +8,16 @@ use ShareMyArt\Request\Request;
 
 class FrontController
 {
+    private const EXTRACT_ID_PATTERN = '/(?<id>\d+)/';
+    private const EXTRACT_URI_PATTERN = '/(?<uri>.*)\//';
     /**
      * @var array
      */
     private $anonymousRoutesConfiguration;
-
     /**
      * @var array
      */
     private $loggedInRoutesConfiguration;
-
     /**
      * @var Request
      */
@@ -40,15 +40,38 @@ class FrontController
     public function dispatch(string $uri): void
     {
         $routesConfiguration = $this->getAvailableRoutes();
-        if (!$this->isRouteAvailable($uri,$routesConfiguration)) {
-            return;
-        }
+        if (preg_match(self::EXTRACT_ID_PATTERN, $uri)) {
+            $uriWithoutId = $this->getUriWithoutId($uri);
+        } else {
+            $uriWithoutId = $uri;
+        };
 
-        $className = $routesConfiguration[$uri]['className'];
-        $methodName = $routesConfiguration[$uri]['methodName'];
+        if (true === $routesConfiguration[$uriWithoutId]['arguments']) {
+            $id = $this->getIdFromUri($uri);
 
-        $controller = new $className($this->request);
-        $controller->$methodName();
+
+            if (!$this->isRouteAvailable($uriWithoutId, $routesConfiguration)) {
+                return;
+            }
+
+            $className = $routesConfiguration[$uriWithoutId]['className'];
+            $methodName = $routesConfiguration[$uriWithoutId]['methodName'];
+
+            $controller = new $className($this->request);
+            $controller->$methodName($id);
+
+        } else {
+            if (!$this->isRouteAvailable($uri, $routesConfiguration)) {
+                return;
+            }
+
+            $className = $routesConfiguration[$uri]['className'];
+            $methodName = $routesConfiguration[$uri]['methodName'];
+
+            $controller = new $className($this->request);
+            $controller->$methodName();
+        };
+
     }
 
     /**
@@ -61,16 +84,30 @@ class FrontController
     {
         $sessionData = $this->request->getSessionData(null);
         if (array_key_exists('userId', $sessionData)) {
-            return array_merge($this->anonymousRoutesConfiguration,$this->loggedInRoutesConfiguration);
+            return array_merge($this->anonymousRoutesConfiguration, $this->loggedInRoutesConfiguration);
         }
 
         return $this->anonymousRoutesConfiguration;
 
     }
 
-    public function isRouteAvailable(string $route, array $routesConfiguration):bool
+    private function getIdFromUri(string $uri): int
     {
-        if(!array_key_exists($route,$routesConfiguration)){
+        preg_match(self::EXTRACT_ID_PATTERN, $uri, $matches);
+
+        return (int)$matches['id'];
+    }
+
+    private function getUriWithoutId(string $uri): string
+    {
+        preg_match(self::EXTRACT_URI_PATTERN, $uri, $matches);
+
+        return $matches['uri'];
+    }
+
+    public function isRouteAvailable(string $route, array $routesConfiguration): bool
+    {
+        if (!array_key_exists($route, $routesConfiguration)) {
 
             require_once "src/View/Template/HttpErrorTemplate/error401.php";
             http_response_code(401);

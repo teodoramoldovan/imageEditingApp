@@ -2,6 +2,7 @@
 
 namespace ShareMyArt\Controller;
 
+use ShareMyArt\Helper\ImageNameConverter;
 use ShareMyArt\Model\DomainObject\Product;
 use ShareMyArt\Model\DomainObject\Tag;
 use ShareMyArt\Model\DomainObject\Tier;
@@ -72,11 +73,16 @@ class ProductController extends AbstractController
             $productMapper = PersistenceFactory::createMapper(Product::class);
             $productMapper->save($newProduct);
 
-            $smallTier = new Tier($newProduct->getId(), 'small', 1.2, $savedImagePath, $savedImagePath);
+            $smallTierImageName=ImageNameConverter::addTierSizeToImagePath($savedImagePath,'small');
+            $smallTierImageNameWithWatermark=ImageNameConverter::addWatermarkToImagePath($smallTierImageName);
+            $smallTier = new Tier($newProduct->getId(), 'small', 1.2, $smallTierImageNameWithWatermark,
+                        $smallTierImageName);
 
             /** @var TierMapper $tierMappper */
             $tierMapper = PersistenceFactory::createMapper(Tier::class);
             $tierMapper->save($smallTier);
+
+            //redirect to a succes page or show succes as flash message
 
         }
 

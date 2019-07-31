@@ -77,6 +77,8 @@
             <br/>
             <label for="tags" class="form-upload-label">Tags</label><br/>
             <select multiple id="tags" class="form-control" name="tags[]">
+                <option value="" selected="selected"> No tags for me this time, thanks</option>
+
                 <?php foreach ($this->tags as $tag) { ?>
                     <option value="<?php echo $tag->getTagName(); ?>"> <?php echo $tag->getTagName(); ?></option>
                 <?php } ?>
@@ -92,8 +94,8 @@
             <label class="form-upload-label">Image</label><br/>
             <input type="file" multiple="multiple" name="image" class="form-control"/>
 
-            <?php if (isset($_FILES) && $this->errors && array_key_exists('imageUploadError', $this->errors)) { ?>
-                <div style="color: rgb(204, 0, 0)"><?php echo $this->errors['imageUploadError'] ?></div>
+            <?php if (isset($_FILES) && $this->errors && array_key_exists('noFileUploadedError', $this->errors)) { ?>
+                <div style="color: rgb(204, 0, 0)"><?php echo $this->errors['noFileUploadedError'] ?></div>
             <?php } ?>
 
             <br/>

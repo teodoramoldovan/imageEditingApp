@@ -54,7 +54,7 @@ class ProductController extends AbstractController
     public function uploadProductPost()
     {
         //validate that the form input is correct
-        $uploadProductFormValidator = new UploadProductFormValidator();
+        $uploadProductFormValidator = new UploadProductFormValidator($this->request);
         $errors = $uploadProductFormValidator->validateInput($this->request->getPostData(null));
 
         /** @var TagFinder $tagFinder */

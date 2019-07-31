@@ -45,6 +45,9 @@ class FrontController
             ? $this->getUriWithoutId($uri)
             : $uri;
 
+        if (!$this->isRouteAvailable($uriWithoutId, $routesConfiguration)) {
+            return;
+        }
 
         if (true === $routesConfiguration[$uriWithoutId]['arguments']) {
             $id = $this->getIdFromUri($uri);
@@ -63,9 +66,7 @@ class FrontController
             return;
         }
 
-        if (!$this->isRouteAvailable($uri, $routesConfiguration)) {
-            return;
-        }
+
 
         $className = $routesConfiguration[$uri]['className'];
         $methodName = $routesConfiguration[$uri]['methodName'];

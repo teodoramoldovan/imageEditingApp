@@ -46,6 +46,10 @@
     color:white;
 }
 
+.black-background{
+    background-color:rgba(0,0,0,0.7) ;
+}
+
 body {
     background-image: url("../resources/images/uploadBackgound.jpg");
     background-repeat: no-repeat;

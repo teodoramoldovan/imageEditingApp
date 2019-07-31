@@ -17,7 +17,7 @@ class DatabaseToTagMapper
      */
     public static function getTagFromTableRow(array $row): Tag
     {
-        return new Tag($row['id'], $row['tag_name']);
+        return new Tag($row['tag_name'], $row['id']);
     }
 
 }

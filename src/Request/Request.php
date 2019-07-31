@@ -9,9 +9,8 @@ class Request
     public function getPostData(?string $key)
     {
         return (empty($key))
-            ?$_POST
-            :$_POST[$key]
-        ;
+            ? $_POST
+            : $_POST[$key];
 
     }
 
@@ -27,9 +26,8 @@ class Request
         }
 
         return (empty($key))
-            ?$_SESSION
-            :$_SESSION[$key]
-            ;
+            ? $_SESSION
+            : $_SESSION[$key];
     }
 
     public function setSessionData(string $key, $data)
@@ -48,6 +46,12 @@ class Request
         }
 
         unset($_SESSION[$key]);
+    }
+
+    public function getFiles(string $firstKey = null, string $secondKey = null)
+    {
+
+        return (null === $firstKey) ? $_FILES : $_FILES[$firstKey][$secondKey];
     }
 
 }

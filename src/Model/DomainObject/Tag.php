@@ -15,7 +15,7 @@ class Tag
      */
     private $tagName;
 
-    public function __construct(int $id, string $tagName)
+    public function __construct(string $tagName, $id = null)
     {
         $this->id = $id;
         $this->tagName = $tagName;

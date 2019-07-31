@@ -9,7 +9,7 @@ class DatabaseConfigurationReader
     private const CONFIG_FILE_PATH = 'configurations/databaseConnectionConfig.php';
 
     /** @var array $configurationsArray */
-    private $configurationsArray;
+    private static $configurationsArray;
 
 
     /**
@@ -19,11 +19,17 @@ class DatabaseConfigurationReader
      */
     public static function getUser(): string
     {
-        if (!isset($configurationsArray)) {
-            $configurationsArray = self::includeConfigurationFile();
-        }
+        self::$configurationsArray = self::includeConfigurationFile();
 
-        return $configurationsArray['user'];
+        return self::$configurationsArray['user'];
+    }
+
+    private static function includeConfigurationFile(): array
+    {
+        if (!isset($configurationsArray)) {
+            self::$configurationsArray = include self::CONFIG_FILE_PATH;;
+        }
+        return self::$configurationsArray;
     }
 
     /**
@@ -33,10 +39,9 @@ class DatabaseConfigurationReader
      */
     public static function getPassword(): string
     {
-        if (!isset($configurationsArray)) {
-            $configurationsArray = self::includeConfigurationFile();
-        }
-        return $configurationsArray['password'];
+        self::$configurationsArray = self::includeConfigurationFile();
+
+        return self::$configurationsArray['password'];
     }
 
     /**
@@ -46,16 +51,11 @@ class DatabaseConfigurationReader
      */
     public static function getDsn(): string
     {
-        if (!isset($configurationsArray)) {
-            $configurationsArray = self::includeConfigurationFile();
-        }
 
-        return $configurationsArray['dsn'];
-    }
+        self::$configurationsArray = self::includeConfigurationFile();
 
-    private static function includeConfigurationFile(): array
-    {
-        return include self::CONFIG_FILE_PATH;
+
+        return self::$configurationsArray['dsn'];
     }
 
 }

@@ -3,3 +3,4 @@ shareMyArtWebPages/uploads/*
 vendor/
 .htaccess
 configurations/databaseConnectionConfig.php
+imageUploads/

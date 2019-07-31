@@ -40,12 +40,10 @@ class UserController extends AbstractController
         $errors = $loginFormValidator->validateInput($this->request->getPostData(null));
 
         $userValidationErrors = [];
+        $user = null;
 
         if (empty($errors)) {
-
-            /** @var UserFinder $userFinder */
-            $userFinder = PersistenceFactory::createFinder(User::class);
-            $user = $userFinder->findUserByEmail($this->request->getPostData('email'));
+            $user = $this->findUserByEmail();
 
             //check if the user does not exist in the database or if the password in invalid
             $userValidator = new UserValidator($this->request);
@@ -54,19 +52,44 @@ class UserController extends AbstractController
 
         $errors = array_merge($userValidationErrors, $errors);
 
-        if (empty($errors)) {
-            //if there are no problems, continue with logging in the user
-            //keep the id in his session
-            $this->request->setSessionData('userId', $user->getId());
+        $this->logUserIn($errors, $user);
 
-            header('Location:/');
+        $this->showLoginErrors($errors);
+
+    }
+
+    private function findUserByEmail(): ?User
+    {
+        /** @var UserFinder $userFinder */
+        $userFinder = PersistenceFactory::createFinder(User::class);
+        $user = $userFinder->findUserByEmail($this->request->getPostData('email'));
+
+        return $user;
+    }
+
+    private function logUserIn(array $errors, ?User $user): void
+    {
+        if (!empty($errors)) {
+            return;
         }
 
-        //if there are errors and the user cannot be logged in, display them
-        //in the login page
+        //if there are no problems, continue with logging in the user
+        //keep the id in his session
+        $this->request->setSessionData('userId', $user->getId());
+
+        header('Location:/');
+    }
+
+    /**
+     * if there are errors and the user cannot be logged in, display them
+     * in the login page
+     *
+     * @param array $errors
+     */
+    private function showLoginErrors(array $errors): void
+    {
         $loginPageRenderer = new LoginPageRenderer($this->request, $errors);
         $loginPageRenderer->render();
-
     }
 
 
@@ -92,7 +115,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * Will register(insert the use in the database) if there are no errors
+     * Will register(insert the user in the database) if there are no errors
      * in the data inserted by the user
      */
     public function registerPost(): void
@@ -105,9 +128,7 @@ class UserController extends AbstractController
 
         if (empty($errors)) {
 
-            /** @var UserFinder $userFinder */
-            $userFinder = PersistenceFactory::createFinder(User::class);
-            $user = $userFinder->findUserByEmail($this->request->getPostData('email'));
+            $user = $this->findUserByEmail();
 
             //verify if the user does not already exist in the database
             $userValidator = new UserValidator($this->request);
@@ -127,16 +148,24 @@ class UserController extends AbstractController
             $userMapper->save($newUser);
 
             //after the registration the user will be automatically logged in
-            $this->request->setSessionData('userId', $newUser->getId());
+            $this->logUserIn($errors, $newUser);
 
-            header('Location:/');
         }
 
-        //if any errors occur, they will be displayed in the form page
-        //without the registration going through
+        $this->showRegisterErrors($errors);
+
+    }
+
+    /**
+     * if any errors occur, they will be displayed in the form page
+     * without the registration going through
+     *
+     * @param array $errors
+     */
+    private function showRegisterErrors(array $errors): void
+    {
         $registerPageRenderer = new RegisterPageRenderer($this->request, $errors);
         $registerPageRenderer->render();
-
     }
 
     public function showUploads()

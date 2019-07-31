@@ -39,7 +39,7 @@ class Tier
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -131,7 +131,6 @@ class Tier
     {
         $this->imagePathWithoutWatermark = $imagePathWithoutWatermark;
     }
-
 
 
     public function getOrders()

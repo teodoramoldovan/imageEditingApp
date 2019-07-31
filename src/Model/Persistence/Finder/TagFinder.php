@@ -38,4 +38,44 @@ class TagFinder extends AbstractFinder
         return $tagsArray;
     }
 
+    public function findTagByName(string $name): ?Tag
+    {
+        $sql = "select * from share_my_art.tag where tag_name=?";
+        $statement = $this->getPdo()->prepare($sql);
+        $statement->bindValue(1, $name, PDO::PARAM_STR);
+
+        $statement->execute();
+
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if (empty($row)) {
+            return null;
+        }
+
+        return new Tag($row['tag_name'], $row['id']);
+    }
+
+    /**
+     * @return array|Tag[]
+     * @throws \Exception
+     */
+    public function findAllTags(): array
+    {
+        $sql = "select * from share_my_art.tag";
+
+        $statement = $this->getPdo()->prepare($sql);
+        $statement->execute();
+
+        $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        $tagsArray = [];
+
+        foreach ($rows as $tagItem) {
+            $tag = DatabaseToTagMapper::getTagFromTableRow($tagItem);
+            array_push($tagsArray, $tag);
+        }
+
+        return $tagsArray;
+    }
+
 }

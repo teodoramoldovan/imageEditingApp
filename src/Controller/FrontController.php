@@ -40,11 +40,11 @@ class FrontController
     public function dispatch(string $uri): void
     {
         $routesConfiguration = $this->getAvailableRoutes();
-        if (preg_match(self::EXTRACT_ID_PATTERN, $uri)) {
-            $uriWithoutId = $this->getUriWithoutId($uri);
-        } else {
-            $uriWithoutId = $uri;
-        };
+
+        $uriWithoutId = (preg_match(self::EXTRACT_ID_PATTERN, $uri))
+            ? $this->getUriWithoutId($uri)
+            : $uri;
+
 
         if (true === $routesConfiguration[$uriWithoutId]['arguments']) {
             $id = $this->getIdFromUri($uri);
@@ -60,17 +60,19 @@ class FrontController
             $controller = new $className($this->request);
             $controller->$methodName($id);
 
-        } else {
-            if (!$this->isRouteAvailable($uri, $routesConfiguration)) {
-                return;
-            }
+            return;
+        }
 
-            $className = $routesConfiguration[$uri]['className'];
-            $methodName = $routesConfiguration[$uri]['methodName'];
+        if (!$this->isRouteAvailable($uri, $routesConfiguration)) {
+            return;
+        }
 
-            $controller = new $className($this->request);
-            $controller->$methodName();
-        };
+        $className = $routesConfiguration[$uri]['className'];
+        $methodName = $routesConfiguration[$uri]['methodName'];
+
+        $controller = new $className($this->request);
+        $controller->$methodName();
+
 
     }
 
@@ -91,18 +93,18 @@ class FrontController
 
     }
 
-    private function getIdFromUri(string $uri): int
-    {
-        preg_match(self::EXTRACT_ID_PATTERN, $uri, $matches);
-
-        return (int)$matches['id'];
-    }
-
     private function getUriWithoutId(string $uri): string
     {
         preg_match(self::EXTRACT_URI_PATTERN, $uri, $matches);
 
         return $matches['uri'];
+    }
+
+    private function getIdFromUri(string $uri): int
+    {
+        preg_match(self::EXTRACT_ID_PATTERN, $uri, $matches);
+
+        return (int)$matches['id'];
     }
 
     public function isRouteAvailable(string $route, array $routesConfiguration): bool

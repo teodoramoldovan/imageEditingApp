@@ -9,11 +9,13 @@ use ShareMyArt\Request\Request;
 class UploadProductRenderer extends AbstractPageRenderer
 {
     private $errors;
+    private $tags;
 
-    public function __construct(Request $request, $errors)
+    public function __construct(Request $request, array $errors, array $tags)
     {
         parent::__construct($request);
         $this->errors = $errors;
+        $this->tags = $tags;
     }
 
     protected function addNecessaryContent()

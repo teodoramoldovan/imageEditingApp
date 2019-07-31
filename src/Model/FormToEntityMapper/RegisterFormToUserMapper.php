@@ -26,15 +26,15 @@ class RegisterFormToUserMapper
      */
     public function getUser(): ?User
     {
-        if ($this->request->getPostData(null)) {
-            return new User(
-                $this->request->getPostData('name'),
-                $this->request->getPostData('email'),
-                $this->request->getPostData('password')
-            );
+        if (!$this->request->getPostData(null)) {
+            return null;
         }
 
-        return null;
+        return new User(
+            $this->request->getPostData('name'),
+            $this->request->getPostData('email'),
+            $this->request->getPostData('password')
+        );
     }
 
 }

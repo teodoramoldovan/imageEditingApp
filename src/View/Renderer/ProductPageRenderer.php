@@ -3,16 +3,24 @@
 namespace ShareMyArt\View\Renderer;
 
 
+use ShareMyArt\Model\DomainObject\Tier;
 use ShareMyArt\Request\Request;
 
 class ProductPageRenderer extends AbstractPageRenderer
 {
-    private $productId;
+    private const UPLOADS_FOLDER_ROOT = "../../../imageUploads/";
+    private $tiers;
 
-    public function __construct(Request $request, int $productId)
+    /**
+     * ProductPageRenderer constructor.
+     * @param Request $request
+     * @param Tier[] $tiers
+     */
+    public function __construct(Request $request, array $tiers)
     {
         parent::__construct($request);
-        $this->productId = $productId;
+        $this->tiers = $tiers;
+
     }
 
 

@@ -3,6 +3,7 @@
 namespace ShareMyArt\Controller;
 
 use ShareMyArt\Helper\ImageNameConverter;
+use ShareMyArt\Helper\TierHandler;
 use ShareMyArt\Model\DomainObject\Product;
 use ShareMyArt\Model\DomainObject\Tag;
 use ShareMyArt\Model\DomainObject\Tier;
@@ -67,15 +68,20 @@ class ProductController extends AbstractController
             $imageSaver = new ImageSaver($this->request);
             $savedImagePath = $imageSaver->saveImage();
 
+
+            $thumbnailPath = ImageNameConverter::addThumbnailToImagePath($savedImagePath);
+            $imageSaver->saveThumbnail($savedImagePath, $thumbnailPath);
+
             $uploadFormToProductMapper = new UploadFormToProductMapper($this->request);
-            $newProduct = $uploadFormToProductMapper->getProduct($savedImagePath);
+            $newProduct = $uploadFormToProductMapper->getProduct($thumbnailPath);
 
             /** @var ProductMapper $productMapper */
             $productMapper = PersistenceFactory::createMapper(Product::class);
             $productMapper->save($newProduct);
 
 
-            $this->insertTiers($savedImagePath,$newProduct);
+            $this->insertTiers($savedImagePath, $newProduct);
+
             //redirect to a succes page or show succes as flash message
 
         }
@@ -86,30 +92,20 @@ class ProductController extends AbstractController
 
     private function insertTiers(string $savedImagePath, Product $newProduct)
     {
-        $smallTierImageName = ImageNameConverter::addTierSizeToImagePath($savedImagePath, 'small');
-        $smallTierImageNameWithWatermark = ImageNameConverter::addWatermarkToImagePath($smallTierImageName);
-        $smallTier = new Tier($newProduct->getId(), 'small', $this->request->getPostData('price'), $smallTierImageNameWithWatermark,
-            $smallTierImageName);
+        $tierHandler = new TierHandler($this->request);
+
+        $smallTier = $tierHandler->getTier($savedImagePath, $newProduct, 'small');
+        $mediumTier = $tierHandler->getTier($savedImagePath, $newProduct, 'medium');
+        $largeTier = $tierHandler->getOriginalTier($savedImagePath, $newProduct);
 
         /** @var TierMapper $tierMapper */
         $tierMapper = PersistenceFactory::createMapper(Tier::class);
+
         $tierMapper->save($smallTier);
-
-        $mediumTierImageName = ImageNameConverter::addTierSizeToImagePath($savedImagePath, 'medium');
-        $mediumTierImageNameWithWatermark = ImageNameConverter::addWatermarkToImagePath($mediumTierImageName);
-        $mediumTier = new Tier($newProduct->getId(), 'medium', $this->request->getPostData('price')-0.5, $mediumTierImageNameWithWatermark,
-            $mediumTierImageName);
-
-        ;
         $tierMapper->save($mediumTier);
-
-
-        $largeTierImageNameWithWatermark = ImageNameConverter::addWatermarkToImagePath($savedImagePath);
-        $largeTier = new Tier($newProduct->getId(), 'large', $this->request->getPostData('price')-1, $largeTierImageNameWithWatermark,
-            $savedImagePath);
-
         $tierMapper->save($largeTier);
     }
+
 
     public function buyProduct()
     {

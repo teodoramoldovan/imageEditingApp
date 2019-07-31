@@ -30,4 +30,56 @@ class ImageSaver
     }
 
 
+    public function saveTierWithoutWatermark(string $inputPath, string $outputPath, string $size)
+    {
+        if ($size === 'small') {
+            $width = 50;
+        }
+        if ($size === 'medium') {
+            $width = 100;
+        }
+
+        $command = ($size !== 'large')
+            ? "php " . __DIR__ . "/../../imageEditProject/my_command_line_tool.php --input-file=" .
+            self::UPLOADS_FOLDER_ROOT . $inputPath . " --output-file=" . self::UPLOADS_FOLDER_ROOT . $outputPath .
+            " --width=" . $width . " 2>&1"
+            : "php " . __DIR__ . "/../../imageEditProject/my_command_line_tool.php --input-file=" .
+            self::UPLOADS_FOLDER_ROOT . $inputPath . " --output-file=" . self::UPLOADS_FOLDER_ROOT . $outputPath .
+            " 2>&1";
+
+        $this->executeTool($command);
+    }
+
+    private function executeTool(string $command)
+    {
+        system($command, $output);
+    }
+
+    public function saveTierWithWatermark(string $inputPath, string $outputPath, string $size)
+    {
+        if ($size === 'small') {
+            $width = 50;
+        }
+        if ($size === 'medium') {
+            $width = 100;
+        }
+
+        $command = ($size !== 'large')
+            ? "php " . __DIR__ . "/../../imageEditProject/my_command_line_tool.php --input-file=" .
+            self::UPLOADS_FOLDER_ROOT . $inputPath . " --output-file=" . self::UPLOADS_FOLDER_ROOT . $outputPath .
+            " --width=" . $width . " --watermark=/var/www/imageUpload/imageEditProject/inputImages/watermark.png" . " 2>&1"
+            : "php " . __DIR__ . "/../../imageEditProject/my_command_line_tool.php --input-file=" .
+            self::UPLOADS_FOLDER_ROOT . $inputPath . " --output-file=" . self::UPLOADS_FOLDER_ROOT . $outputPath .
+            " --watermark=/var/www/imageUpload/imageEditProject/inputImages/watermark.png" . " 2>&1";
+
+        $this->executeTool($command);
+    }
+
+    public function saveThumbnail(string $inputPath, string $outputPath)
+    {
+        $command = "php " . __DIR__ . "/../../imageEditProject/my_command_line_tool.php --input-file=" .
+            self::UPLOADS_FOLDER_ROOT . $inputPath . " --output-file=" . self::UPLOADS_FOLDER_ROOT . $outputPath .
+            " 2>&1";
+        $this->executeTool($command);
+    }
 }

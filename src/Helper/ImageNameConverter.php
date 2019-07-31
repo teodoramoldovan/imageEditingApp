@@ -60,4 +60,14 @@ class ImageNameConverter
         return $newImageName;
     }
 
+    public static function addThumbnailToImagePath(string $imagePath): string
+    {
+        $imageName = self::getImageName($imagePath);
+        $imageExtension = self::getImageExtension($imagePath);
+
+        $newImageName = $imageName . '_thumbnail' . '.' . $imageExtension;
+
+        return $newImageName;
+    }
+
 }

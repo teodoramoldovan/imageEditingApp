@@ -1,6 +1,6 @@
 <?php
 
-const HELP_FILE_NAME = "help.txt";
+const HELP_FILE_NAME = "imageEditProject/output/help.txt";
 
 function showHelp(): void
 {

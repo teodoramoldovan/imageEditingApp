@@ -1,6 +1,6 @@
 <?php
 
-require_once "utils/utilityFunctions.php";
+require_once "imageEditProject/utils/utilityFunctions.php";
 
 /**
  * Decides which one between width and height will not change when resizing by format

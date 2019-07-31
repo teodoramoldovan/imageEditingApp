@@ -23,6 +23,7 @@ const IMAGE="--image";
 
 $payload1=parseCommandLineInput($argv);
 
+
 if(isHelp($payload1)){
     showHelp();
     exit();

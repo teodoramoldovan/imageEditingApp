@@ -75,6 +75,7 @@ function validateImageExtensions(string $path): bool
 {
     preg_match(VALID_EXTENSION_PATTERN, $path, $matches);
 
+
     $match = $matches[0];
 
     if (in_array($match, VALID_EXTENSION_TYPES)) {
@@ -187,6 +188,7 @@ function validateInput(array $payload): array
     if (!validateImageExtensions($payload[OUTPUT_FILE])) {
         $errors[] = POSSIBLE_ERRORS['output-extension'];
     }
+
 
     if (!empty($payload[WATERMARK]) && !validateImageExtensions($payload[WATERMARK])) {
         $errors[] = POSSIBLE_ERRORS['watermark-extension'];

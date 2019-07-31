@@ -1,6 +1,6 @@
 <?php
 
-require_once "utils/utilityFunctions.php";
+require_once "imageEditProject/utils/utilityFunctions.php";
 
 /**
  * Will resize the image according to the initial ratio and the new specified width

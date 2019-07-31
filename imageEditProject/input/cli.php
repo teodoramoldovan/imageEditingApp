@@ -44,15 +44,16 @@ function parseCommandLineInput(array $argv): array
 
         $payload[OUTPUT_FILE] = PREDEFINED_OUTPUT_FOLDER . $payload[OUTPUT_FILE];
     }
-    if (!isPathGiven($payload[WATERMARK])) {
+
+    /*if (!isPathGiven($payload[WATERMARK])) {
         $payload[WATERMARK] = PREDEFINED_INPUT_FOLDER . $payload[WATERMARK];
-    }
+    }*/
 
     //use realpath only if the file exists, else the application will fail the validation step
     //avoid inserting false as a value in the array where it should be a string
     $payload[INPUT_FILE] = (!realpath($payload[INPUT_FILE])) ? $payload[INPUT_FILE] : realpath($payload[INPUT_FILE]);
     $payload[OUTPUT_FILE] = (!realpath($payload[OUTPUT_FILE])) ? $payload[OUTPUT_FILE] : realpath($payload[OUTPUT_FILE]);
-    $payload[WATERMARK] = (!realpath($payload[WATERMARK])) ? $payload[WATERMARK] : realpath($payload[WATERMARK]);
+    //$payload[WATERMARK] = (!realpath($payload[WATERMARK])) ? $payload[WATERMARK] : realpath($payload[WATERMARK]);
 
 
     return $payload;

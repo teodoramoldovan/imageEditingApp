@@ -46,6 +46,7 @@ class FrontController
             : $uri;
 
         if (!$this->isRouteAvailable($uriWithoutId, $routesConfiguration)) {
+            header('Location:/user/login');
             return;
         }
 
@@ -110,14 +111,8 @@ class FrontController
 
     public function isRouteAvailable(string $route, array $routesConfiguration): bool
     {
-        if (!array_key_exists($route, $routesConfiguration)) {
+       return array_key_exists($route, $routesConfiguration);
 
-            require_once "src/View/Template/HttpErrorTemplate/error401.php";
-            http_response_code(401);
-            return false;
-        }
-
-        return true;
     }
 
 

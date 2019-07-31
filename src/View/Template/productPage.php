@@ -21,7 +21,7 @@
         <div class="col-md-4">
             <div class="thumbnail">
 
-                <img src=<?php echo self::UPLOADS_FOLDER_ROOT.$tier->getImagePathWithWatermark();?> alt="" style="width:100%">
+                <img src=<?php echo self::UPLOADS_FOLDER_ROOT.$tier->getImagePathWithWatermark();?> >
                 <div class="caption">
                     <p style="color:white"> <?php echo $tier->getPrice();?></p>
                 </div>
@@ -32,6 +32,22 @@
 
     <?php } ?>
 </div>
+
+<form class="form-upload" method="post" action="/product/buy">
+
+    <div class="form-group">
+
+
+        <input type="radio" name="Size" value="s" style="color:white"> Small <br />
+        <input type="radio" name="Size" value="m" style="color:white"> Medium <br />
+        <input type="radio" name="Size" value="l" style="color:white"> Large <br />
+
+    </div>
+
+    <button class="btn btn-lg btn-primary btn-block form-group" type="submit" formnovalidate>
+        Buy
+    </button>
+</form>
 </body>
 
 </html>

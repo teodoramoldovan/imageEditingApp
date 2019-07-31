@@ -38,6 +38,36 @@ class ProductFinder extends AbstractFinder
         return $productsArray;
     }
 
+    /**
+     * @param int $id
+     * @return array|Product[]
+     * @throws \Exception
+     */
+    public function findProductsByUserId(int $id):array
+    {
+        $sql = "select * from share_my_art.product where user_id=?";
+
+        $statement = $this->getPdo()->prepare($sql);
+
+        $statement->bindValue(1, $id, PDO::PARAM_INT);
+
+        $statement->execute();
+
+        $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        $productsArray = [];
+
+        $rowsWithTags=$this->insertTagsInRow($rows);
+
+        foreach ($rowsWithTags as $productItem) {
+
+            $product = DatabaseToProductMapper::getProductFromTableRow($productItem);
+            array_push($productsArray, $product);
+        }
+
+        return $productsArray;
+    }
+
     private function insertTagsInRow(array $rows): array
     {
         $newRows = [];

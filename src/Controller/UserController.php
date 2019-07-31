@@ -4,8 +4,10 @@
 namespace ShareMyArt\Controller;
 
 
+use ShareMyArt\Model\DomainObject\Product;
 use ShareMyArt\Model\DomainObject\User;
 use ShareMyArt\Model\FormToEntityMapper\RegisterFormToUserMapper;
+use ShareMyArt\Model\Persistence\Finder\ProductFinder;
 use ShareMyArt\Model\Persistence\Finder\UserFinder;
 use ShareMyArt\Model\Persistence\Mapper\UserMapper;
 use ShareMyArt\Model\Persistence\PersistenceFactory;
@@ -168,11 +170,16 @@ class UserController extends AbstractController
         $registerPageRenderer->render();
     }
 
+    /**
+     * @throws \Exception
+     */
     public function showUploads()
     {
-        //TODO
+        /** @var ProductFinder $productFinder */
+        $productFinder=PersistenceFactory::createFinder(Product::class);
+        $uploads=$productFinder->findProductsByUserId($this->request->getSessionData('userId'));
 
-        $uploadsPageRenderer = new UploadsPageRenderer($this->request);
+        $uploadsPageRenderer = new UploadsPageRenderer($this->request,$uploads);
         $uploadsPageRenderer->render();
     }
 

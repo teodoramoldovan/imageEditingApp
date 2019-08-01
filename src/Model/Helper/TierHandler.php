@@ -11,13 +11,28 @@ use ShareMyArt\Model\Saver\ImageSaver;
 
 class TierHandler
 {
+    /**
+     * @var Request
+     */
     private $request;
 
+    /**
+     * TierHandler constructor.
+     * @param Request $request
+     */
     public function __construct(Request $request)
     {
         $this->request = $request;
     }
 
+    /**
+     * Will prepare the tier for saving in the imageUploads directory
+     *
+     * @param string $savedImagePath
+     * @param Product $newProduct
+     * @param string $size
+     * @return Tier
+     */
     public function getTier(string $savedImagePath, Product $newProduct, string $size): Tier
     {
         $imageSaver = new ImageSaver($this->request);
@@ -39,6 +54,13 @@ class TierHandler
         return $tier;
     }
 
+    /**
+     * Will generate a price based on the tier size and on the
+     * price for the original image
+     *
+     * @param string $size
+     * @return float
+     */
     private function getTierPrice(string $size): float
     {
         $originalPrice = $this->request->getPostData('price');
@@ -52,6 +74,11 @@ class TierHandler
         return $tierPrice;
     }
 
+    /**
+     * @param string $savedImagePath
+     * @param Product $newProduct
+     * @return Tier
+     */
     public function getOriginalTier(string $savedImagePath, Product $newProduct): Tier
     {
         $imageSaver = new ImageSaver($this->request);

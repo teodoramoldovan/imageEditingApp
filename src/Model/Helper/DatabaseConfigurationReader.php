@@ -24,6 +24,11 @@ class DatabaseConfigurationReader
         return self::$configurationsArray['user'];
     }
 
+    /**
+     * Will include the configuration file if not already included
+     *
+     * @return array
+     */
     private static function includeConfigurationFile(): array
     {
         if (!isset($configurationsArray)) {

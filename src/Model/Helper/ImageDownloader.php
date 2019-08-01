@@ -7,6 +7,12 @@ namespace ShareMyArt\Model\Helper;
 class ImageDownloader
 {
 
+    /**
+     * Will handle image download to be used in buy method from
+     * the ProductController
+     *
+     * @param string $path
+     */
     public static function downloadImage(string $path)
     {
         $fullFilePath = self::getUrl($path);
@@ -24,6 +30,13 @@ class ImageDownloader
         }
     }
 
+    /**
+     * Will return the full path for the location were the file
+     * to be downloaded is
+     *
+     * @param string $path
+     * @return string
+     */
     private static function getUrl(string $path)
     {
         return '/var/www/imageUpload/imageUploads/' . $path;

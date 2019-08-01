@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ShareMyArt\Helper;
+namespace ShareMyArt\Model\Helper;
 
 
 class ImageNameConverter

@@ -63,9 +63,9 @@
 
                     <label style="color:white">
                         <input type="radio" name="pages"
-                               value="5" <?php if (5 === $this->resultsPerPage) echo ' checked="checked"'; ?>
+                               value="3" <?php if (3 === $this->resultsPerPage) echo ' checked="checked"'; ?>
                         >
-                        5
+                        3
                     </label>
 
 
@@ -86,8 +86,8 @@
 
                     <label style="color:white">
                         <input type="radio" name="pages"
-                               value="10" <?php if (10 === $this->resultsPerPage) echo ' checked="checked"'; ?>>
-                        10
+                               value="9" <?php if (9 === $this->resultsPerPage) echo ' checked="checked"'; ?>>
+                        9
                     </label>
 
 

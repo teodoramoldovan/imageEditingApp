@@ -176,11 +176,5 @@ class Product
         $this->thumbnailPath = $thumbnailPath;
     }
 
-    //TODO
-    public function getTiers()
-    {
-
-    }
-
 
 }

@@ -1,12 +1,11 @@
 <?php
 
 
-namespace ShareMyArt\Helper;
+namespace ShareMyArt\Model\Helper;
 
 
 class ImageDownloader
 {
-    private const UPLOADS_FOLDER_ROOT = "imageUploads/";
 
     public static function downloadImage(string $path)
     {

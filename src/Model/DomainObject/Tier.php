@@ -133,10 +133,5 @@ class Tier
     }
 
 
-    public function getOrders()
-    {
-
-    }
-
 
 }

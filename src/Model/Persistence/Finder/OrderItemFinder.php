@@ -13,8 +13,12 @@ class OrderItemFinder extends AbstractFinder
      * @return array
      * @throws \Exception
      */
-    public function findAllOrdersByUserId(int $userId): array
+    public function findAllOrdersByUserId(int $userId = null): array
     {
+        if (null === $userId) {
+            return [];
+        }
+
         $sql = "select * from share_my_art.order_item where user_id=?";
 
         $statement = $this->getPdo()->prepare($sql);

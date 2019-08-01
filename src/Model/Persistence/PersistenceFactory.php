@@ -4,7 +4,7 @@ namespace ShareMyArt\Model\Persistence;
 
 
 use PDO;
-use ShareMyArt\Helper\DatabaseConfigurationReader;
+use ShareMyArt\Model\Helper\DatabaseConfigurationReader;
 use ShareMyArt\Model\Persistence\Finder\AbstractFinder;
 use ShareMyArt\Model\Persistence\Mapper\AbstractMapper;
 use PDOException;

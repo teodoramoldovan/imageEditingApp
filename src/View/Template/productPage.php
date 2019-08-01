@@ -67,7 +67,7 @@
             <?php if (false === array_search($this->tiers[1]->getId(), $this->boughtTierIds)) { ?>
                 <label style="color:white">
                     <input type="radio" name="size"
-                           value="<?php echo $this->tiers[1]->getImagePathWithoutWatermark(); ?>">
+                           value="<?php echo $this->tiers[1]->getImagePathWithoutWatermark(); ?>" checked>
                     Medium
                 </label>
             <?php } ?>
@@ -77,7 +77,7 @@
             <?php if (false === array_search($this->tiers[2]->getId(), $this->boughtTierIds)) { ?>
                 <label style="color:white">
                     <input type="radio" name="size"
-                           value="<?php echo $this->tiers[2]->getImagePathWithoutWatermark(); ?>">
+                           value="<?php echo $this->tiers[2]->getImagePathWithoutWatermark(); ?>" checked>
                     Original
                 </label>
             <?php } ?>

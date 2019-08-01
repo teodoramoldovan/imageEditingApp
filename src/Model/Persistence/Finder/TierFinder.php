@@ -12,7 +12,7 @@ class TierFinder extends AbstractFinder
     {
         $sql = "select * from share_my_art.tier where product_id=?";
 
-        $tiersArray = $this->getTiers($sql, $productId);;
+        $tiersArray = $this->getTiers($sql, $productId);
 
         return $tiersArray;
 

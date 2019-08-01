@@ -4,8 +4,7 @@
 namespace ShareMyArt\View\Renderer\Header;
 
 
-use ShareMyArt\Helper\HeaderOptionsConstants;
-use ShareMyArt\View\Renderer\LoginPageRenderer;
+use ShareMyArt\Model\Helper\HeaderOptionsConstants;
 
 class LoggedInUserHeader extends HeaderDecorator
 {

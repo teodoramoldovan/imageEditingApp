@@ -91,19 +91,4 @@ class User
         $this->email = $email;
     }
 
-
-    //TODO
-
-    public function getOrders()
-    {
-
-    }
-
-    //TODO
-    public function getProducts()
-    {
-
-    }
-
-
 }

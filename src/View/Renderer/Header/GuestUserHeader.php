@@ -4,7 +4,7 @@
 namespace ShareMyArt\View\Renderer\Header;
 
 
-use ShareMyArt\Helper\HeaderOptionsConstants;
+use ShareMyArt\Model\Helper\HeaderOptionsConstants;
 
 class GuestUserHeader extends HeaderDecorator
 {

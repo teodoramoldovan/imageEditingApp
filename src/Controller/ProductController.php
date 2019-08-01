@@ -2,9 +2,9 @@
 
 namespace ShareMyArt\Controller;
 
-use ShareMyArt\Helper\ImageDownloader;
-use ShareMyArt\Helper\ImageNameConverter;
-use ShareMyArt\Helper\TierHandler;
+use ShareMyArt\Model\Helper\ImageDownloader;
+use ShareMyArt\Model\Helper\ImageNameConverter;
+use ShareMyArt\Model\Helper\TierHandler;
 use ShareMyArt\Model\DomainObject\OrderItem;
 use ShareMyArt\Model\DomainObject\Product;
 use ShareMyArt\Model\DomainObject\Tag;
@@ -20,7 +20,7 @@ use ShareMyArt\Model\Persistence\Mapper\ProductMapper;
 use ShareMyArt\Model\Persistence\Mapper\TierMapper;
 use ShareMyArt\Model\Persistence\PersistenceFactory;
 use ShareMyArt\Model\Validation\FormValidator\UploadProductFormValidator;
-use ShareMyArt\Saver\ImageSaver;
+use ShareMyArt\Model\Saver\ImageSaver;
 use ShareMyArt\View\Renderer\HomepageRenderer;
 use ShareMyArt\View\Renderer\ProductPageRenderer;
 use ShareMyArt\View\Renderer\UploadProductRenderer;
@@ -151,6 +151,7 @@ class ProductController extends AbstractController
         $mediumTier = $tierHandler->getTier($savedImagePath, $newProduct, 'medium');
         $largeTier = $tierHandler->getOriginalTier($savedImagePath, $newProduct);
 
+
         /** @var TierMapper $tierMapper */
         $tierMapper = PersistenceFactory::createMapper(Tier::class);
 
@@ -198,7 +199,10 @@ class ProductController extends AbstractController
 
         $orders = [];
         if (!empty($this->request->getSessionData(null))) {
-            $orders = $orderItemsFinder->findAllOrdersByUserId($this->request->getSessionData('userId'));
+            $orders = array_key_exists('userId',$this->request->getSessionData(null))
+                    ?$orderItemsFinder->findAllOrdersByUserId($this->request->getSessionData('userId'))
+                    :$orderItemsFinder->findAllOrdersByUserId()
+            ;
         }
 
 

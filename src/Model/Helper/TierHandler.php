@@ -1,13 +1,13 @@
 <?php
 
 
-namespace ShareMyArt\Helper;
+namespace ShareMyArt\Model\Helper;
 
 
 use ShareMyArt\Model\DomainObject\Product;
 use ShareMyArt\Model\DomainObject\Tier;
 use ShareMyArt\Request\Request;
-use ShareMyArt\Saver\ImageSaver;
+use ShareMyArt\Model\Saver\ImageSaver;
 
 class TierHandler
 {

@@ -9,7 +9,7 @@ use ShareMyArt\Model\DomainObject\Product;
 use PDO;
 use ShareMyArt\Model\DomainObject\Tag;
 use ShareMyArt\Model\Persistence\PersistenceFactory;
-use ShareMyArt\Request\Request;
+
 
 class ProductFinder extends AbstractFinder
 {

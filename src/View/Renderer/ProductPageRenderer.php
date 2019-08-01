@@ -3,6 +3,7 @@
 namespace ShareMyArt\View\Renderer;
 
 
+use ShareMyArt\Model\DomainObject\Product;
 use ShareMyArt\Model\DomainObject\Tier;
 use ShareMyArt\Request\Request;
 
@@ -12,6 +13,7 @@ class ProductPageRenderer extends AbstractPageRenderer
     private $tiers;
     private $orders;
     private $boughtTierIds;
+    private $product;
 
     /**
      * ProductPageRenderer constructor.
@@ -19,12 +21,13 @@ class ProductPageRenderer extends AbstractPageRenderer
      * @param Tier[] $tiers
      * @param array $orders
      */
-    public function __construct(Request $request, array $tiers, array $orders)
+    public function __construct(Request $request, array $tiers, array $orders, Product $product)
     {
         parent::__construct($request);
         $this->tiers = $tiers;
         $this->orders = $orders;
         $this->boughtTierIds = $this->getOrderIds();
+        $this->product = $product;
     }
 
     private function getOrderIds(): array

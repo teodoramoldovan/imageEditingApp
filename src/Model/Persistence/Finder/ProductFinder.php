@@ -66,6 +66,25 @@ class ProductFinder extends AbstractFinder
         return $newRows;
     }
 
+    public function findProductById(int $productId): Product
+    {
+        $sql = "select * from share_my_art.product where id=?";
+
+        $statement = $this->getPdo()->prepare($sql);
+        $statement->bindValue(1, $productId, PDO::PARAM_INT);
+
+        $statement->execute();
+
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+        $rowsWithTags = $this->insertTagsInRow([$row]);
+
+        $product = DatabaseToProductMapper::getProductFromTableRow($rowsWithTags[0]);
+
+        return $product;
+
+    }
+
     /**
      * @param int $id
      * @return array|Product[]

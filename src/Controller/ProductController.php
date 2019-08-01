@@ -168,6 +168,10 @@ class ProductController extends AbstractController
      */
     public function showProduct(int $id)
     {
+        /** @var ProductFinder $productFinder */
+        $productFinder = PersistenceFactory::createFinder(Product::class);
+        $product = $productFinder->findProductById($id);
+
         /** @var TierFinder $tierFinder */
         $tierFinder = PersistenceFactory::createFinder(Tier::class);
         $tiers = $tierFinder->findAllTiersByProductId($id);
@@ -181,7 +185,7 @@ class ProductController extends AbstractController
         }
 
 
-        $productPageRenderer = new ProductPageRenderer($this->request, $tiers, $orders);
+        $productPageRenderer = new ProductPageRenderer($this->request, $tiers, $orders, $product);
         $productPageRenderer->render();
     }
 

@@ -27,7 +27,7 @@
 
                 <img style="max-width: 300px; max-height: 200px"
                      src=<?php echo self::UPLOADS_FOLDER_ROOT . $tier->getImagePathWithoutWatermark(); ?>
-                     style="width:100%">
+                     >
                 <div class="caption">
                     <p style="color:white">Bought with: <?php echo $tier->getPrice(); ?> EUR</p>
                 </div>

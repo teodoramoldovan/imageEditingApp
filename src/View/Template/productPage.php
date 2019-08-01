@@ -13,7 +13,19 @@
 
 </head>
 <body>
+<div class="form-upload" style="max-width: 100%">
+    <p style="color:white "> Product title: <?php echo $this->product->getTitle(); ?></p>
+    <p style="color:white "> Description: <?php echo $this->product->getDescription(); ?></p>
+    <p style="color:white "> Camera specifications: <?php echo $this->product->getCameraSpecifications(); ?></p>
+    <p style="color:white "> Capture date: <?php echo $this->product->getCaptureDate()->format("Y-m-d"); ?></p>
 
+
+    <?php foreach ($this->product->getTags() as $tag) { ?>
+        <span class="badge" style="color: black; background-color: aquamarine">
+            <?php echo '#' . $tag->getTagName(); ?>
+        </span>
+    <?php } ?>
+</div>
 
 <div class="row form-upload" style="max-width: 100%">
     <?php foreach ($this->tiers as $tier) { ?>
@@ -52,7 +64,7 @@
 
 
         <div class="radio">
-            <?php if (false ===array_search($this->tiers[1]->getId(), $this->boughtTierIds)) { ?>
+            <?php if (false === array_search($this->tiers[1]->getId(), $this->boughtTierIds)) { ?>
                 <label style="color:white">
                     <input type="radio" name="size"
                            value="<?php echo $this->tiers[1]->getImagePathWithoutWatermark(); ?>">
@@ -62,7 +74,7 @@
             <input type="hidden" name="mediumTierId" value="<?php echo $this->tiers[1]->getId(); ?>">
         </div>
         <div class="radio">
-            <?php if (false ===array_search($this->tiers[2]->getId(), $this->boughtTierIds)) { ?>
+            <?php if (false === array_search($this->tiers[2]->getId(), $this->boughtTierIds)) { ?>
                 <label style="color:white">
                     <input type="radio" name="size"
                            value="<?php echo $this->tiers[2]->getImagePathWithoutWatermark(); ?>">

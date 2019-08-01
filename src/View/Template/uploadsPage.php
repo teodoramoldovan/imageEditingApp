@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<h1 style="color: white; background-color: rgba(0,0,0,0.7);" >My Uploads</h1>
+<h1 style="color: white">My Uploads</h1>
 <div class="row form-upload" style="max-width: 100%">
 
     <?php if (empty($this->uploads)) { ?>
@@ -28,7 +28,7 @@
 
                 <img style="max-width: 300px; max-height: 200px"
                      src=<?php echo self::UPLOADS_FOLDER_ROOT . $product->getThumbnailPath(); ?> alt="Lights"
-                     style="width:100%">
+                     >
                 <div class="caption">
                     <p style="color:white"><?php echo $product->getTitle(); ?></p>
                 </div>

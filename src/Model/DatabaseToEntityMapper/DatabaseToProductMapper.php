@@ -17,8 +17,9 @@ class DatabaseToProductMapper
      */
     public static function getProductFromTableRow(array $row): Product
     {
-        $timestamp=strtotime($row['capture_date']);
-        $captureDate=new \DateTime(date("Y-m-d", $timestamp));
+
+        $timestamp = strtotime($row['capture_date']);
+        $captureDate = new \DateTime(date("Y-m-d", $timestamp));
 
         return new Product(
 

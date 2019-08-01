@@ -13,7 +13,6 @@ class DatabaseToTagMapper
      *
      * @param array $row representing a tag in the database
      * @return Tag
-     * @throws \Exception
      */
     public static function getTagFromTableRow(array $row): Tag
     {

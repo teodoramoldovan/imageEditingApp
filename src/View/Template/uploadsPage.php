@@ -16,14 +16,21 @@
 
 
 <div class="row form-upload" style="max-width: 100%">
-    <?php foreach ($this->uploads as $product){?>
+
+    <?php if (empty($this->uploads)) { ?>
+        <h1 style="color: white" >You haven't uploaded anything yet</h1>
+    <?php } ?>
+
+    <?php foreach ($this->uploads as $product) { ?>
 
         <div class="col-md-4">
             <div class="thumbnail">
 
-                <img style="max-width: 300px; max-height: 200px" src=<?php echo self::UPLOADS_FOLDER_ROOT.$product->getThumbnailPath();?> alt="Lights" style="width:100%">
+                <img style="max-width: 300px; max-height: 200px"
+                     src=<?php echo self::UPLOADS_FOLDER_ROOT . $product->getThumbnailPath(); ?> alt="Lights"
+                     style="width:100%">
                 <div class="caption">
-                    <p style="color:white"><?php echo $product->getTitle();?></p>
+                    <p style="color:white"><?php echo $product->getTitle(); ?></p>
                 </div>
 
             </div>

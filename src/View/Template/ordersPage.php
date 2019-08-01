@@ -16,15 +16,20 @@
 
 
 <div class="row form-upload" style="max-width: 100%">
-    <?php foreach ($this->tiers as $tier){?>
+
+    <?php if (empty($this->tiers)) { ?>
+        <h1 style="color: white">You haven't bought any product yet</h1>
+    <?php } ?>
+    <?php foreach ($this->tiers as $tier) { ?>
 
         <div class="col-md-4">
             <div class="thumbnail">
 
-                <img style="max-width: 300px; max-height: 200px" src=<?php echo self::UPLOADS_FOLDER_ROOT.$tier->getImagePathWithoutWatermark();?>
-                        style="width:100%">
+                <img style="max-width: 300px; max-height: 200px"
+                     src=<?php echo self::UPLOADS_FOLDER_ROOT . $tier->getImagePathWithoutWatermark(); ?>
+                     style="width:100%">
                 <div class="caption">
-                    <p style="color:white">Bought with: <?php echo $tier->getPrice();?> EUR</p>
+                    <p style="color:white">Bought with: <?php echo $tier->getPrice(); ?> EUR</p>
                 </div>
 
             </div>

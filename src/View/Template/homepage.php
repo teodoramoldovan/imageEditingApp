@@ -14,6 +14,43 @@
 </head>
 <body>
 
+<div class="form-upload" style="max-width: 100%">
+    <form action="" method="get" enctype="multipart/form-data">
+
+
+        <div>
+            <label for="query" class="form-upload-label">Search</label>
+            <input id="query" type="text"
+                   name="query" class="form-control"
+                   value="<?php echo $this->queryData; ?>"/>
+        </div>
+
+        <div>
+            <label for="sorts" class="form-upload-label">Sort by</label><br/>
+            <select id="sorts" class="form-control" name="sort">
+                <option value="title" selected="selected">Title</option>
+                <option value="camera_specifications">Camera Specifications</option>
+                <option value="capture_date">Capture Date</option>
+
+            </select>
+
+            <br/>
+            <select id="sorts" class="form-control" name="direction">
+                <option value="ASC" selected="selected">Ascending</option>
+                <option value="DESC">Descending</option>
+
+            </select>
+        </div>
+
+
+        <br/>
+
+
+        <input type="submit" class="btn btn-info btn-lg btn-block" value="Search"/>
+    </form>
+</div>
+
+
 <div class="row form-upload" style="max-width: 100%">
 
     <div class="col" style="max-width: 150px">
@@ -88,16 +125,20 @@
 <div class="row form-upload" style="max-width: 100%;">
 
 
-        <?php if ($this->page != 0) { ?>
-            <a href="/?page=<?php echo $prev; ?>"><?php echo '<< Previous page'; ?></a>
-        <?php } ?>
+    <?php if ($this->page != 0) { ?>
+        <a href="/?page=<?php echo $prev; ?>&query=<?php echo $this->queryData; ?>&sort=<?php echo $this->sortData; ?>&direction=<?php echo $this->directionData; ?>">
+            <?php echo '<< Previous page'; ?>
+        </a>
+    <?php } ?>
 
 
 
-        <?php if ($this->resultsPerPage <= $numberOfProducts) { ?>
-            <a style=" margin-left: 20px" href="/?page=<?php echo $next; ?> "><?php echo 'Next page >>'; ?></a>
-        <?php } ?>
-
+    <?php if ($this->resultsPerPage <= $numberOfProducts) { ?>
+        <a style=" margin-left: 20px"
+           href="/?page=<?php echo $next; ?>&query=<?php echo $this->queryData; ?>&sort=<?php echo $this->sortData; ?>&direction=<?php echo $this->directionData; ?>">
+            <?php echo 'Next page >>'; ?>
+        </a>
+    <?php } ?>
 
 
 </div>

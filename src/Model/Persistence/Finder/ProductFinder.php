@@ -13,19 +13,41 @@ use ShareMyArt\Request\Request;
 
 class ProductFinder extends AbstractFinder
 {
+    const SEARCHABLE_FIELDS = ['title', 'description'];
+
     /**
-     * @return array|Product[]
+     * @param int $page
+     * @param int $resultsPerPage
+     * @param string $query
+     * @param array $filters
+     * @param array $sorts
+     * @return array
      * @throws \Exception
      */
-    public function findAllProducts(Request $request, int $page): array
+    public function findAllProducts(int $page, int $resultsPerPage, $query = '', $filters = [], $sorts = []): array
     {
+        $sql = "SELECT * FROM share_my_art.product";
 
-        $resultsPerPage = $request->getSessionData('resultsPerPage');
+        if ($query) {
+            $sql .= ' WHERE';
+            foreach (self::SEARCHABLE_FIELDS as $field) {
+                $sql .= " {$field} LIKE '%{$query}%' OR";
+            }
+
+            $sql = rtrim($sql, ' OR');
+        }
+
+
+        if (!empty($sorts['sort'] || !empty($sorts['direction']))) {
+            $sql .= " ORDER BY {$sorts['sort']} {$sorts['direction']}";
+
+        }
+        // TODO add filters
+
         $limit = $resultsPerPage;
         $offset = $resultsPerPage * $page;
+        $sql .= ' LIMIT ?,?';
 
-
-        $sql = "select * from share_my_art.product limit ?,?";
 
         $statement = $this->getPdo()->prepare($sql);
         $statement->bindValue(1, $offset, PDO::PARAM_INT);

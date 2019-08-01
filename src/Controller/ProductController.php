@@ -33,17 +33,34 @@ class ProductController extends AbstractController
      */
     public function showProducts(): void
     {
+        $sortData = array_key_exists('sort', $this->request->getGetData(null))
+            ? $this->request->getGetData('sort')
+            : '';
+        $directionData = array_key_exists('direction', $this->request->getGetData(null))
+            ? $this->request->getGetData('direction')
+            : '';
+        $queryData = array_key_exists('query', $this->request->getGetData(null))
+            ? $this->request->getGetData('query')
+            : '';
 
         $page = $this->getCurrentPage();
-        $numberOfProductsPerPage = $this->getNumberOfProductsPerPages();
+        $query = $queryData;
+        $filters = [];
+        $sorts = [
+            'sort' => $sortData,
+            'direction' => $directionData
+        ];
 
+        // remember products per page so they don't get reset in each request
+        $numberOfProductsPerPage = $this->getNumberOfProductsPerPages();
         $this->request->setSessionData('resultsPerPage', $numberOfProductsPerPage);
 
         /** @var ProductFinder $productFinder */
         $productFinder = PersistenceFactory::createFinder(Product::class);
-        $products = $productFinder->findAllProducts($this->request, $page);
+        $products = $productFinder->findAllProducts($page, $numberOfProductsPerPage, $query, $filters, $sorts);
 
-        $homepageRenderer = new HomepageRenderer($this->request, $products, $page, $numberOfProductsPerPage);
+        $homepageRenderer = new HomepageRenderer($this->request, $products, $page,
+            $numberOfProductsPerPage, $sortData, $directionData, $queryData);
         $homepageRenderer->render();
     }
 

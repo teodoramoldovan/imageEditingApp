@@ -14,7 +14,7 @@
 </head>
 <body>
 
-
+<h1 style="color: white; background-color: rgba(0,0,0,0.7);">My Orders</h1>
 <div class="row form-upload" style="max-width: 100%">
 
     <?php if (empty($this->tiers)) { ?>

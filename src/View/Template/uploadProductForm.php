@@ -18,6 +18,7 @@
 
     <div class="container">
 
+        <?php var_dump(isset($_POST['image']));?>
 
         <form action="/product/uploadPost" method="post" enctype="multipart/form-data" class="form-upload">
 

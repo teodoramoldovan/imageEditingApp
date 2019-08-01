@@ -118,7 +118,7 @@ class ProductController extends AbstractController
 
             $this->insertTiers($savedImagePath, $newProduct);
 
-            //redirect to a succes page or show succes as flash message
+            header('Location:/user/myUploads');
 
         }
 

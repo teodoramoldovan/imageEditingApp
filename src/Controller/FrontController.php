@@ -10,6 +10,8 @@ class FrontController
 {
     private const EXTRACT_ID_PATTERN = '/(?<id>\d+)/';
     private const EXTRACT_URI_PATTERN = '/(?<uri>.*)\//';
+    private const REMOVE_QUERY_PATTERN = '/(?<uri>.*)\?/';
+
     /**
      * @var array
      */
@@ -39,6 +41,12 @@ class FrontController
      */
     public function dispatch(string $uri): void
     {
+
+        if(strpos($uri,'?')){
+            $uri = $this->removeQueryStringFromUri($uri);
+        }
+
+
         $routesConfiguration = $this->getAvailableRoutes();
 
         $uriWithoutId = (preg_match(self::EXTRACT_ID_PATTERN, $uri))
@@ -68,7 +76,6 @@ class FrontController
         }
 
 
-
         $className = $routesConfiguration[$uri]['className'];
         $methodName = $routesConfiguration[$uri]['methodName'];
 
@@ -76,6 +83,13 @@ class FrontController
         $controller->$methodName();
 
 
+    }
+
+    private function removeQueryStringFromUri(string $uri): string
+    {
+        preg_match(self::REMOVE_QUERY_PATTERN, $uri, $matches);
+
+        return $matches['uri'];
     }
 
     /**
@@ -102,17 +116,17 @@ class FrontController
         return $matches['uri'];
     }
 
+    public function isRouteAvailable(string $route, array $routesConfiguration): bool
+    {
+        return array_key_exists($route, $routesConfiguration);
+
+    }
+
     private function getIdFromUri(string $uri): int
     {
         preg_match(self::EXTRACT_ID_PATTERN, $uri, $matches);
 
         return (int)$matches['id'];
-    }
-
-    public function isRouteAvailable(string $route, array $routesConfiguration): bool
-    {
-       return array_key_exists($route, $routesConfiguration);
-
     }
 
 

@@ -12,7 +12,7 @@ use ShareMyArt\View\Renderer\Header\LoggedInUserHeader;
 abstract class AbstractPageRenderer
 {
     private $header;
-    private $request;
+    protected $request;
 
     public function __construct(Request $request)
     {

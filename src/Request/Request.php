@@ -16,7 +16,9 @@ class Request
 
     public function getGetData(?string $key)
     {
-        return $_GET[$key];
+        return (empty($key))
+            ? $_GET
+            : $_GET[$key];
     }
 
     public function getSessionData(?string $key)

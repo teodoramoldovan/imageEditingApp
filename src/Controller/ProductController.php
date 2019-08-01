@@ -33,11 +33,29 @@ class ProductController extends AbstractController
      */
     public function showProducts(): void
     {
+        $getData = $this->request->getGetData(null);
+
+        $page = (isset($getData['page']))
+            ? $this->request->getGetData('page')
+            : 0;
+
+        $sessionData=$this->request->getSessionData(null);
+        $resultsPerPage=(isset($sessionData['resultsPerPage']))
+                        ? $sessionData['resultsPerPage']
+                        : 6
+                        ;
+
+        $postData = $this->request->getPostData(null);
+        $numberOfProductsPerPage = (isset($postData['pages']))
+            ? $this->request->getPostData('pages')
+            : $resultsPerPage;
+        $this->request->setSessionData('resultsPerPage',$numberOfProductsPerPage);
+
         /** @var ProductFinder $productFinder */
         $productFinder = PersistenceFactory::createFinder(Product::class);
-        $products = $productFinder->findAllProducts();
+        $products = $productFinder->findAllProducts($this->request,$page);
 
-        $homepageRenderer = new HomepageRenderer($this->request, $products);
+        $homepageRenderer = new HomepageRenderer($this->request, $products, $page, $numberOfProductsPerPage);
         $homepageRenderer->render();
     }
 
@@ -142,15 +160,15 @@ class ProductController extends AbstractController
         $tiers = $tierFinder->findAllTiersByProductId($id);
 
         /** @var OrderItemFinder $orderItemsFinder */
-        $orderItemsFinder=PersistenceFactory::createFinder(OrderItem::class);
+        $orderItemsFinder = PersistenceFactory::createFinder(OrderItem::class);
 
-        $orders=[];
-        if(!empty($this->request->getSessionData(null))){
-            $orders=$orderItemsFinder->findAllOrdersByUserId($this->request->getSessionData('userId'));
+        $orders = [];
+        if (!empty($this->request->getSessionData(null))) {
+            $orders = $orderItemsFinder->findAllOrdersByUserId($this->request->getSessionData('userId'));
         }
 
 
-        $productPageRenderer = new ProductPageRenderer($this->request, $tiers,$orders);
+        $productPageRenderer = new ProductPageRenderer($this->request, $tiers, $orders);
         $productPageRenderer->render();
     }
 

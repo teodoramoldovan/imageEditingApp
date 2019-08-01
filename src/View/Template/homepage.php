@@ -85,18 +85,20 @@
 
 </div>
 
-<div class="row form-upload" style="max-width: 100%;position: relative;">
+<div class="row form-upload" style="max-width: 100%;">
 
-    <?php if ($this->page != 0) { ?>
-        <a href="/?page=<?php echo $prev; ?>">Previous page</a>
-    <?php } ?>
-    </p>
 
-    <p>
-        <?php if ($this->resultsPerPage <= $numberOfProducts) { ?>
-            <a href="/?page=<?php echo $next; ?> ">Next page</a>
+        <?php if ($this->page != 0) { ?>
+            <a href="/?page=<?php echo $prev; ?>"><?php echo '<< Previous page'; ?></a>
         <?php } ?>
-    </p>
+
+
+
+        <?php if ($this->resultsPerPage <= $numberOfProducts) { ?>
+            <a style=" margin-left: 20px" href="/?page=<?php echo $next; ?> "><?php echo 'Next page >>'; ?></a>
+        <?php } ?>
+
+
 
 </div>
 

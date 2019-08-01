@@ -33,30 +33,43 @@ class ProductController extends AbstractController
      */
     public function showProducts(): void
     {
+
+        $page = $this->getCurrentPage();
+        $numberOfProductsPerPage = $this->getNumberOfProductsPerPages();
+
+        $this->request->setSessionData('resultsPerPage', $numberOfProductsPerPage);
+
+        /** @var ProductFinder $productFinder */
+        $productFinder = PersistenceFactory::createFinder(Product::class);
+        $products = $productFinder->findAllProducts($this->request, $page);
+
+        $homepageRenderer = new HomepageRenderer($this->request, $products, $page, $numberOfProductsPerPage);
+        $homepageRenderer->render();
+    }
+
+    private function getCurrentPage(): int
+    {
         $getData = $this->request->getGetData(null);
 
         $page = (isset($getData['page']))
             ? $this->request->getGetData('page')
             : 0;
+        return $page;
+    }
 
-        $sessionData=$this->request->getSessionData(null);
-        $resultsPerPage=(isset($sessionData['resultsPerPage']))
-                        ? $sessionData['resultsPerPage']
-                        : 6
-                        ;
+    private function getNumberOfProductsPerPages(): int
+    {
+        $sessionData = $this->request->getSessionData(null);
+        $resultsPerPage = (isset($sessionData['resultsPerPage']))
+            ? $sessionData['resultsPerPage']
+            : 6;
 
         $postData = $this->request->getPostData(null);
         $numberOfProductsPerPage = (isset($postData['pages']))
             ? $this->request->getPostData('pages')
             : $resultsPerPage;
-        $this->request->setSessionData('resultsPerPage',$numberOfProductsPerPage);
 
-        /** @var ProductFinder $productFinder */
-        $productFinder = PersistenceFactory::createFinder(Product::class);
-        $products = $productFinder->findAllProducts($this->request,$page);
-
-        $homepageRenderer = new HomepageRenderer($this->request, $products, $page, $numberOfProductsPerPage);
-        $homepageRenderer->render();
+        return $numberOfProductsPerPage;
     }
 
     /**

@@ -5,9 +5,11 @@ namespace ShareMyArt\Controller;
 
 
 use ShareMyArt\Model\DomainObject\Product;
+use ShareMyArt\Model\DomainObject\Tier;
 use ShareMyArt\Model\DomainObject\User;
 use ShareMyArt\Model\FormToEntityMapper\RegisterFormToUserMapper;
 use ShareMyArt\Model\Persistence\Finder\ProductFinder;
+use ShareMyArt\Model\Persistence\Finder\TierFinder;
 use ShareMyArt\Model\Persistence\Finder\UserFinder;
 use ShareMyArt\Model\Persistence\Mapper\UserMapper;
 use ShareMyArt\Model\Persistence\PersistenceFactory;
@@ -185,8 +187,11 @@ class UserController extends AbstractController
 
     public function showOrders()
     {
-        //TODO
-        $ordersPageRenderer = new OrdersPageRenderer($this->request);
+        /** @var TierFinder $tierFinder */
+        $tierFinder=PersistenceFactory::createFinder(Tier::class);
+        $tiers=$tierFinder->findTierOrderItemsByUserId($this->request->getSessionData('userId'));
+
+        $ordersPageRenderer = new OrdersPageRenderer($this->request,$tiers);
         $ordersPageRenderer->render();
 
     }

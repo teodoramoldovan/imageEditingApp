@@ -8,23 +8,41 @@ use ShareMyArt\Request\Request;
 
 class FrontController
 {
+    /**
+     * Used for extracting id from uri
+     */
     private const EXTRACT_ID_PATTERN = '/(?<id>\d+)/';
+
+    /**
+     * Used for extracting uri if id is also present
+     */
     private const EXTRACT_URI_PATTERN = '/(?<uri>.*)\//';
+
+    /**
+     * Used for removing query string from the uri
+     */
     private const REMOVE_QUERY_PATTERN = '/(?<uri>.*)\?/';
 
     /**
      * @var array
      */
     private $anonymousRoutesConfiguration;
+
     /**
      * @var array
      */
     private $loggedInRoutesConfiguration;
+
     /**
      * @var Request
      */
     private $request;
 
+    /**
+     * FrontController constructor.
+     * @param array $anonymousRoutesConfiguration
+     * @param array $loggedInRoutesConfiguration
+     */
     public function __construct(array $anonymousRoutesConfiguration,
                                 array $loggedInRoutesConfiguration)
     {
@@ -42,7 +60,7 @@ class FrontController
     public function dispatch(string $uri): void
     {
 
-        if(strpos($uri,'?')){
+        if (strpos($uri, '?')) {
             $uri = $this->removeQueryStringFromUri($uri);
         }
 
@@ -85,6 +103,10 @@ class FrontController
 
     }
 
+    /**
+     * @param string $uri Contains uri as given in server superglobal
+     * @return string Contains uri without query string
+     */
     private function removeQueryStringFromUri(string $uri): string
     {
         preg_match(self::REMOVE_QUERY_PATTERN, $uri, $matches);
@@ -109,6 +131,10 @@ class FrontController
 
     }
 
+    /**
+     * @param string $uri
+     * @return string
+     */
     private function getUriWithoutId(string $uri): string
     {
         preg_match(self::EXTRACT_URI_PATTERN, $uri, $matches);
@@ -116,12 +142,21 @@ class FrontController
         return $matches['uri'];
     }
 
+    /**
+     * @param string $route
+     * @param array $routesConfiguration
+     * @return bool
+     */
     public function isRouteAvailable(string $route, array $routesConfiguration): bool
     {
         return array_key_exists($route, $routesConfiguration);
 
     }
 
+    /**
+     * @param string $uri
+     * @return int
+     */
     private function getIdFromUri(string $uri): int
     {
         preg_match(self::EXTRACT_ID_PATTERN, $uri, $matches);

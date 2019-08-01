@@ -64,6 +64,9 @@ class ProductController extends AbstractController
         $homepageRenderer->render();
     }
 
+    /**
+     * @return int Contains the number of the current page
+     */
     private function getCurrentPage(): int
     {
         $getData = $this->request->getGetData(null);
@@ -74,9 +77,15 @@ class ProductController extends AbstractController
         return $page;
     }
 
+    /**
+     * @return int Contains number of products to be displayed in a page
+     */
     private function getNumberOfProductsPerPages(): int
     {
         $sessionData = $this->request->getSessionData(null);
+
+        //if there isn't yet set a number of results per page
+        //the default value will be 6
         $resultsPerPage = (isset($sessionData['resultsPerPage']))
             ? $sessionData['resultsPerPage']
             : 6;
@@ -90,6 +99,8 @@ class ProductController extends AbstractController
     }
 
     /**
+     * Will display the upload product form
+     *
      * @throws \Exception
      */
     public function uploadProduct(): void
@@ -105,6 +116,9 @@ class ProductController extends AbstractController
     }
 
     /**
+     * Will handle uploading of a product, including generating tiers and
+     * saving them
+     *
      * @throws \Exception
      */
     public function uploadProductPost()
@@ -143,6 +157,12 @@ class ProductController extends AbstractController
         $uploadProductRenderer->render();
     }
 
+    /**
+     * Will generate the tiers to be used at upload and will persist them
+     *
+     * @param string $savedImagePath
+     * @param Product $newProduct
+     */
     private function insertTiers(string $savedImagePath, Product $newProduct)
     {
         $tierHandler = new TierHandler($this->request);
@@ -161,6 +181,9 @@ class ProductController extends AbstractController
     }
 
 
+    /**
+     * Will handle the download when a product is bought
+     */
     public function buyProduct()
     {
 
@@ -181,6 +204,8 @@ class ProductController extends AbstractController
     }
 
     /**
+     * Will display the product details page
+     *
      * @param int $id
      * @throws \Exception
      */
@@ -199,12 +224,10 @@ class ProductController extends AbstractController
 
         $orders = [];
         if (!empty($this->request->getSessionData(null))) {
-            $orders = array_key_exists('userId',$this->request->getSessionData(null))
-                    ?$orderItemsFinder->findAllOrdersByUserId($this->request->getSessionData('userId'))
-                    :$orderItemsFinder->findAllOrdersByUserId()
-            ;
+            $orders = array_key_exists('userId', $this->request->getSessionData(null))
+                ? $orderItemsFinder->findAllOrdersByUserId($this->request->getSessionData('userId'))
+                : $orderItemsFinder->findAllOrdersByUserId();
         }
-
 
         $productPageRenderer = new ProductPageRenderer($this->request, $tiers, $orders, $product);
         $productPageRenderer->render();

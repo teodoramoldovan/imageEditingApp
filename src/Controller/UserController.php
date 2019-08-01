@@ -62,6 +62,9 @@ class UserController extends AbstractController
 
     }
 
+    /**
+     * @return User|null
+     */
     private function findUserByEmail(): ?User
     {
         /** @var UserFinder $userFinder */
@@ -71,6 +74,10 @@ class UserController extends AbstractController
         return $user;
     }
 
+    /**
+     * @param array $errors
+     * @param User|null $user
+     */
     private function logUserIn(array $errors, ?User $user): void
     {
         if (!empty($errors)) {
@@ -178,20 +185,21 @@ class UserController extends AbstractController
     public function showUploads()
     {
         /** @var ProductFinder $productFinder */
-        $productFinder=PersistenceFactory::createFinder(Product::class);
-        $uploads=$productFinder->findProductsByUserId($this->request->getSessionData('userId'));
+        $productFinder = PersistenceFactory::createFinder(Product::class);
+        $uploads = $productFinder->findProductsByUserId($this->request->getSessionData('userId'));
 
-        $uploadsPageRenderer = new UploadsPageRenderer($this->request,$uploads);
+        $uploadsPageRenderer = new UploadsPageRenderer($this->request, $uploads);
         $uploadsPageRenderer->render();
     }
+
 
     public function showOrders()
     {
         /** @var TierFinder $tierFinder */
-        $tierFinder=PersistenceFactory::createFinder(Tier::class);
-        $tiers=$tierFinder->findTierOrderItemsByUserId($this->request->getSessionData('userId'));
+        $tierFinder = PersistenceFactory::createFinder(Tier::class);
+        $tiers = $tierFinder->findTierOrderItemsByUserId($this->request->getSessionData('userId'));
 
-        $ordersPageRenderer = new OrdersPageRenderer($this->request,$tiers);
+        $ordersPageRenderer = new OrdersPageRenderer($this->request, $tiers);
         $ordersPageRenderer->render();
 
     }

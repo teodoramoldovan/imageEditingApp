@@ -9,6 +9,9 @@ use ShareMyArt\Model\DomainObject\Tier;
 
 class TierMapper extends AbstractMapper
 {
+    /**
+     * @param Tier $tier
+     */
     public function save(Tier $tier)
     {
         if (null === $tier->getId()) {
@@ -18,6 +21,9 @@ class TierMapper extends AbstractMapper
         $this->update($tier);
     }
 
+    /**
+     * @param Tier $tier
+     */
     private function insert(Tier $tier)
     {
         $sql = "insert into share_my_art.tier 
@@ -35,6 +41,9 @@ class TierMapper extends AbstractMapper
         $statement->execute();
     }
 
+    /**
+     * @param Tier $tier
+     */
     private function update(Tier $tier)
     {
 

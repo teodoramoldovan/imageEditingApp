@@ -4,6 +4,7 @@
 namespace ShareMyArt\Model\Persistence\Mapper;
 
 use PDO;
+
 abstract class AbstractMapper
 {
     /**
@@ -29,5 +30,5 @@ abstract class AbstractMapper
         return $this->pdo;
     }
 
-    // TODO extract here what else is common to all mappers
+
 }

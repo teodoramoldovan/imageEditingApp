@@ -9,11 +9,17 @@ use ShareMyArt\Model\DomainObject\ProductTag;
 
 class ProductTagMapper extends AbstractMapper
 {
+    /**
+     * @param ProductTag $productTag
+     */
     public function save(ProductTag $productTag)
     {
         $this->insert($productTag);
     }
 
+    /**
+     * @param ProductTag $productTag
+     */
     private function insert(ProductTag $productTag)
     {
         $row = $this->translateToArray($productTag);
@@ -28,6 +34,10 @@ class ProductTagMapper extends AbstractMapper
         $statement->execute();
     }
 
+    /**
+     * @param ProductTag $productTag
+     * @return array
+     */
     private function translateToArray(ProductTag $productTag): array
     {
         $row = [

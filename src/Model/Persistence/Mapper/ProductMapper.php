@@ -13,6 +13,9 @@ use ShareMyArt\Model\Persistence\PersistenceFactory;
 
 class ProductMapper extends AbstractMapper
 {
+    /**
+     * @param Product $product
+     */
     public function save(Product $product)
     {
         if (null === $product->getId()) {
@@ -25,6 +28,9 @@ class ProductMapper extends AbstractMapper
 
     }
 
+    /**
+     * @param Product $product
+     */
     private function insert(Product $product)
     {
         $row = $this->translateToArray($product);
@@ -51,6 +57,10 @@ class ProductMapper extends AbstractMapper
 
     }
 
+    /**
+     * @param Product $product
+     * @return array
+     */
     private function translateToArray(Product $product): array
     {
         $row = [

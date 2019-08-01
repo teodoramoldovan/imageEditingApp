@@ -8,6 +8,9 @@ use ShareMyArt\Model\DomainObject\User;
 
 class UserMapper extends AbstractMapper
 {
+    /**
+     * @param User $user
+     */
     public function save(User $user)
     {
         if ($user->getId() === null) {
@@ -19,9 +22,11 @@ class UserMapper extends AbstractMapper
 
     }
 
+    /**
+     * @param User $user
+     */
     private function insert(User $user)
     {
-        //TODO: transform user to array row then prepare an INSERT ($this->getPdo()) and execute
         $row = $this->translateToArray($user);
 
         $sql = "insert into share_my_art.user (name,email,password) values (?,?,?);";
@@ -35,9 +40,13 @@ class UserMapper extends AbstractMapper
         $user->setId($this->getPdo()->lastInsertId());
     }
 
+    /**
+     * @param User $user
+     * @return array
+     */
     private function translateToArray(User $user): array
     {
-        // TODO: you may extract this array to a constant in this class, the app config, or you can use reflection
+
         // to obtain all the properties of user dynamically then by convention obtain the columns to map to (next level)
         $row = [
             'id' => $user->getId(),
@@ -53,14 +62,12 @@ class UserMapper extends AbstractMapper
         return $row;
     }
 
+    /**
+     * @param User $user
+     */
     private function update(User $user)
     {
-        //TODO: transform user to array row then prepare an UPDATE ($this->getPdo()) and execute
-        $row = $this->translateToArray($user);
-        $sql = "";
-        $statement = $this->getPdo()->prepare($sql);
-        // ... bind parameters from $row
-        $statement->execute();
+
     }
 
 }

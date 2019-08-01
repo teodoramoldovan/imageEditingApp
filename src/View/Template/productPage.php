@@ -15,18 +15,18 @@
 <body>
 
 
-<div class="row">
-    <?php foreach ($this->tiers as $tier){?>
+<div class="row form-upload" style="max-width: 100%">
+    <?php foreach ($this->tiers as $tier) { ?>
 
-        <div class="col-md-4">
-            <div class="thumbnail">
+        <div class="col-md-4" align="center">
 
-                <img src=<?php echo self::UPLOADS_FOLDER_ROOT.$tier->getImagePathWithWatermark();?> >
-                <div class="caption">
-                    <p style="color:white"> <?php echo $tier->getPrice();?></p>
-                </div>
 
+            <img style="max-width: 400px;"
+                 src=<?php echo self::UPLOADS_FOLDER_ROOT . $tier->getImagePathWithWatermark(); ?>>
+            <div class="caption">
+                <p style="color:white "> Price: <?php echo $tier->getPrice(); ?> EUR</p>
             </div>
+
 
         </div>
 
@@ -35,12 +35,42 @@
 
 <form class="form-upload" method="post" action="/product/buy">
 
-    <div class="form-group">
+    <div class="form-group" align="center">
 
 
-        <input type="radio" name="Size" value="s" style="color:white"> Small <br />
-        <input type="radio" name="Size" value="m" style="color:white"> Medium <br />
-        <input type="radio" name="Size" value="l" style="color:white"> Large <br />
+        <div class="radio">
+
+            <?php if (false === array_search($this->tiers[0]->getId(), $this->boughtTierIds)) { ?>
+                <label style="color:white">
+                    <input type="radio" name="size"
+                           value="<?php echo $this->tiers[0]->getImagePathWithoutWatermark(); ?>"
+                           checked>Small
+                </label>
+            <?php } ?>
+            <input type="hidden" name="smallTierId" value="<?php echo $this->tiers[0]->getId(); ?>">
+        </div>
+
+
+        <div class="radio">
+            <?php if (false ===array_search($this->tiers[1]->getId(), $this->boughtTierIds)) { ?>
+                <label style="color:white">
+                    <input type="radio" name="size"
+                           value="<?php echo $this->tiers[1]->getImagePathWithoutWatermark(); ?>">
+                    Medium
+                </label>
+            <?php } ?>
+            <input type="hidden" name="mediumTierId" value="<?php echo $this->tiers[1]->getId(); ?>">
+        </div>
+        <div class="radio">
+            <?php if (false ===array_search($this->tiers[2]->getId(), $this->boughtTierIds)) { ?>
+                <label style="color:white">
+                    <input type="radio" name="size"
+                           value="<?php echo $this->tiers[2]->getImagePathWithoutWatermark(); ?>">
+                    Original
+                </label>
+            <?php } ?>
+            <input type="hidden" name="largeTierId" value="<?php echo $this->tiers[2]->getId(); ?>">
+        </div>
 
     </div>
 

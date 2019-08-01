@@ -10,6 +10,8 @@ class HomepageRenderer extends AbstractPageRenderer
 {
     private $products;
 
+    private const UPLOADS_FOLDER_ROOT = "../../../imageUploads/";
+
     public function __construct(Request $request, array $products)
     {
         parent::__construct($request);

@@ -79,7 +79,7 @@ class ImageSaver
     {
         $command = "php " . __DIR__ . "/../../imageEditProject/my_command_line_tool.php --input-file=" .
             self::UPLOADS_FOLDER_ROOT . $inputPath . " --output-file=" . self::UPLOADS_FOLDER_ROOT . $outputPath .
-            " 2>&1";
+            " --watermark=/var/www/imageUpload/imageEditProject/inputImages/watermark.png" ." 2>&1";
         $this->executeTool($command);
     }
 }

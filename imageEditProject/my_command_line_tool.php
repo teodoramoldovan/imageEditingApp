@@ -25,7 +25,7 @@ $payload1=parseCommandLineInput($argv);
 
 
 if(isHelp($payload1)){
-    showHelp();
+    //showHelp();
     exit();
 }
 
@@ -33,7 +33,7 @@ $payload9=validateInput($payload1);
 
 if(!empty($payload9)){
     $errorString=convertArrayOfErrorsToString($payload9);
-    showErrors($errorString);
+    //showErrors($errorString);
     exit();
 }
 
@@ -47,4 +47,4 @@ $payload4=addWatermarkToImage($payload3);
 
 $payload5=saveProcessedImage($payload4);
 
-showSucces($payload5);
+//showSuccess($payload5);

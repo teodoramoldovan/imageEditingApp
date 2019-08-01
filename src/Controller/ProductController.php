@@ -2,15 +2,20 @@
 
 namespace ShareMyArt\Controller;
 
+use ShareMyArt\Helper\ImageDownloader;
 use ShareMyArt\Helper\ImageNameConverter;
 use ShareMyArt\Helper\TierHandler;
+use ShareMyArt\Model\DomainObject\OrderItem;
 use ShareMyArt\Model\DomainObject\Product;
 use ShareMyArt\Model\DomainObject\Tag;
 use ShareMyArt\Model\DomainObject\Tier;
+use ShareMyArt\Model\FormToEntityMapper\BuyFormToOrderItemMapper;
 use ShareMyArt\Model\FormToEntityMapper\UploadFormToProductMapper;
+use ShareMyArt\Model\Persistence\Finder\OrderItemFinder;
 use ShareMyArt\Model\Persistence\Finder\ProductFinder;
 use ShareMyArt\Model\Persistence\Finder\TagFinder;
 use ShareMyArt\Model\Persistence\Finder\TierFinder;
+use ShareMyArt\Model\Persistence\Mapper\OrderItemMapper;
 use ShareMyArt\Model\Persistence\Mapper\ProductMapper;
 use ShareMyArt\Model\Persistence\Mapper\TierMapper;
 use ShareMyArt\Model\Persistence\PersistenceFactory;
@@ -109,17 +114,45 @@ class ProductController extends AbstractController
 
     public function buyProduct()
     {
-        //TODO
+
+        $path = $this->request->getPostData('size');
+
+
+        $buyFormMapper = new BuyFormToOrderItemMapper($this->request);
+        $orderItem = $buyFormMapper->getOrderItem();
+
+        /** @var OrderItemMapper $orderItemMapper */
+        $orderItemMapper = PersistenceFactory::createMapper(OrderItem::class);
+        $orderItemMapper->save($orderItem);
+
+        ImageDownloader::downloadImage($path);
+
+        header('Location:/user/myOrders');
+
     }
 
+    /**
+     * @param int $id
+     * @throws \Exception
+     */
     public function showProduct(int $id)
     {
         /** @var TierFinder $tierFinder */
         $tierFinder = PersistenceFactory::createFinder(Tier::class);
         $tiers = $tierFinder->findAllTiersByProductId($id);
 
-        $productPageRenderer = new ProductPageRenderer($this->request, $tiers);
+        /** @var OrderItemFinder $orderItemsFinder */
+        $orderItemsFinder=PersistenceFactory::createFinder(OrderItem::class);
+
+        $orders=[];
+        if(!empty($this->request->getSessionData(null))){
+            $orders=$orderItemsFinder->findAllOrdersByUserId($this->request->getSessionData('userId'));
+        }
+
+
+        $productPageRenderer = new ProductPageRenderer($this->request, $tiers,$orders);
         $productPageRenderer->render();
     }
+
 
 }

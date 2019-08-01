@@ -31,6 +31,8 @@ class UserMapper extends AbstractMapper
         $statement->bindValue(3, $row['password'], PDO::PARAM_STR);
 
         $statement->execute();
+
+        $user->setId($this->getPdo()->lastInsertId());
     }
 
     private function translateToArray(User $user): array

@@ -5,6 +5,7 @@
     background-color: rgba(0,0,0,0.7);
     border: none;
 }
+
 .form-upload-heading {
     text-align:center;
     margin-bottom: 30px;
@@ -49,6 +50,9 @@
 .black-background{
     background-color:rgba(0,0,0,0.7) ;
 }
+
+
+
 
 body {
     background-image: url("../resources/images/uploadBackgound.jpg");

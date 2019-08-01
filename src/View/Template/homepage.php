@@ -1,23 +1,39 @@
 <!DOCTYPE html>
 
-<html>
-
+<html lang="en">
 <head>
-    <title>Home Page</title>
+    <title>ShareMyArt</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../../../css/styles.css">
+
 </head>
-
 <body>
-    <?php echo "HOMEPAGE"; ?>
 
-    <div style="color:white">I have: <?=$numberOfProducts?> products</div>
 
-    <ul>
-            <?php foreach ($this->products as $product){?>
-                <li>
-                <a href="/product/show/<?php echo $product->getId();?>" style="color:white"> Product name: <?= $product->getTitle()?></a>
-                </li>
-            <?php } ?>
-    </ul>
+<div class="row form-upload" style="max-width: 100%">
+    <?php foreach ($this->products as $product) { ?>
+
+        <div class="col-md-4" align="center">
+
+
+            <img style="max-width: 300px; max-height: 200px" src=<?php echo self::UPLOADS_FOLDER_ROOT.$product->getThumbnailPath(); ?>>
+            <div class="caption">
+                <a href="/product/show/<?php echo $product->getId(); ?>" style="color:white ">
+                    Title: <?php echo $product->getTitle(); ?> </a>
+            </div>
+
+
+        </div>
+
+    <?php } ?>
+</div>
+
+
 </body>
 
 </html>

@@ -38,7 +38,7 @@ class UploadFormToProductMapper
             $this->request->getSessionData('userId'),
             $this->request->getPostData('imageTitle'),
             $this->request->getPostData('imageDescription'),
-            $tags,//array de tags
+            $tags,
             $this->request->getPostData('cameraSpecifications'),
             new \DateTime($this->request->getPostData('captureDate')),//datetime
             $savedImagePath

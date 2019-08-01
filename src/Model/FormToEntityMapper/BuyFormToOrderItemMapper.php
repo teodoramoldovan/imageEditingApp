@@ -14,11 +14,19 @@ class BuyFormToOrderItemMapper
      */
     private $request;
 
+    /**
+     * BuyFormToOrderItemMapper constructor.
+     * @param Request $request
+     */
     public function __construct(Request $request)
     {
         $this->request = $request;
     }
 
+    /**
+     * @return OrderItem
+     * @throws \Exception
+     */
     public function getOrderItem(): OrderItem
     {
         $tierId = $this->getTierIdBySize();
@@ -26,7 +34,10 @@ class BuyFormToOrderItemMapper
         return new OrderItem($this->request->getSessionData('userId'), $tierId, new \DateTime());
     }
 
-    public function getTierIdBySize(): int
+    /**
+     * @return int
+     */
+    private function getTierIdBySize(): int
     {
         if (strpos($this->request->getPostData('size'), 'small')) {
             return (int)$this->request->getPostData('smallTierId');

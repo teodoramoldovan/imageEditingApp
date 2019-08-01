@@ -14,6 +14,10 @@ class RegisterFormToUserMapper
      */
     private $request;
 
+    /**
+     * RegisterFormToUserMapper constructor.
+     * @param Request $request
+     */
     public function __construct(Request $request)
     {
         $this->request = $request;

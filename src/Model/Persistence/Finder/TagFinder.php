@@ -38,6 +38,10 @@ class TagFinder extends AbstractFinder
         return $tagsArray;
     }
 
+    /**
+     * @param string $name
+     * @return Tag|null
+     */
     public function findTagByName(string $name): ?Tag
     {
         $sql = "select * from share_my_art.tag where tag_name=?";

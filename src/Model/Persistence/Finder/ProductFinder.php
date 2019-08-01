@@ -42,7 +42,6 @@ class ProductFinder extends AbstractFinder
             $sql .= " ORDER BY {$sorts['sort']} {$sorts['direction']}";
 
         }
-        // TODO add filters
 
         $limit = $resultsPerPage;
         $offset = $resultsPerPage * $page;
@@ -70,6 +69,11 @@ class ProductFinder extends AbstractFinder
         return $productsArray;
     }
 
+    /**
+     * @param array $rows
+     * @return array
+     * @throws \Exception
+     */
     private function insertTagsInRow(array $rows): array
     {
         $newRows = [];
@@ -88,6 +92,11 @@ class ProductFinder extends AbstractFinder
         return $newRows;
     }
 
+    /**
+     * @param int $productId
+     * @return Product
+     * @throws \Exception
+     */
     public function findProductById(int $productId): Product
     {
         $sql = "select * from share_my_art.product where id=?";
@@ -137,6 +146,10 @@ class ProductFinder extends AbstractFinder
         return $productsArray;
     }
 
+    /**
+     * @param int|null $resultsPerPage
+     * @return int
+     */
     private function getLimit(int $resultsPerPage = null): int
     {
         $limit = (null === $resultsPerPage)
@@ -146,6 +159,10 @@ class ProductFinder extends AbstractFinder
 
     }
 
+    /**
+     * @param int $limit
+     * @return int
+     */
     private function getOffset(int $limit): int
     {
         $pages = ceil($this->findProductsNumber() / $limit);
@@ -162,6 +179,9 @@ class ProductFinder extends AbstractFinder
         return $offset;
     }
 
+    /**
+     * @return int
+     */
     private function findProductsNumber(): int
     {
         $sql = "select count(*) from share_my_art.product";

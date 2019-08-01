@@ -8,6 +8,10 @@ use ShareMyArt\Model\DatabaseToEntityMapper\DatabaseToTierMapper;
 
 class TierFinder extends AbstractFinder
 {
+    /**
+     * @param int $productId
+     * @return array
+     */
     public function findAllTiersByProductId(int $productId): array
     {
         $sql = "select * from share_my_art.tier where product_id=?";
@@ -18,6 +22,11 @@ class TierFinder extends AbstractFinder
 
     }
 
+    /**
+     * @param string $sql
+     * @param int $parameterValue
+     * @return array
+     */
     private function getTiers(string $sql, int $parameterValue): array
     {
         $statement = $this->getPdo()->prepare($sql);
@@ -37,6 +46,10 @@ class TierFinder extends AbstractFinder
         return $tiersArray;
     }
 
+    /**
+     * @param int $userId
+     * @return array
+     */
     public function findTierOrderItemsByUserId(int $userId): array
     {
         $sql = "select * from share_my_art.tier where id in (select tier_id from order_item where user_id=?)";

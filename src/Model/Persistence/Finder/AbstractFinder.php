@@ -30,6 +30,5 @@ abstract class AbstractFinder
         return $this->pdo;
     }
 
-    // TODO extract here what else is common to all finders
 
 }
